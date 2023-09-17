@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image from "next/legacy/image"
 import { useContext, useEffect} from "react"
 import AppContext from "./app-context"
 

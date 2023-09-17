@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import Link from 'next/link'
 import bonsaiPhoto from '../public/product-images/b1-1.png'
 import seedPhoto from '../public/product-images/s1.jpg'
