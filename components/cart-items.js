@@ -1,4 +1,4 @@
-import Image from "next/legacy/image"
+import Image from "next/image"
 import { useContext, useEffect} from "react"
 import AppContext from "./app-context"
 
@@ -62,7 +62,10 @@ const CartItems = () => {
                     height={160}
                     // priority={true}
                     className="cart-image"
-                />
+                    style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                    }} />
                 </div>
                 <div className="cart-middle-content">
                     <p>{cartItem.name}</p>

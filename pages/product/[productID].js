@@ -4,7 +4,7 @@ import Nav from '@/components/nav';
 import Footer from '@/components/footer';
 import {useRouter} from 'next/router'
 import { useState, useEffect, useContext} from 'react';
-import Image from "next/legacy/image"
+import Image from "next/image"
 import Link from 'next/link'
 import { AiOutlineArrowRight } from "react-icons/ai";
 import AppContext from '@/components/app-context';
@@ -75,7 +75,10 @@ const ProductDetailsPage = () => {
                             height={800}
                             priority={true}
                             className="product-details-page-image"
-                        />
+                            style={{
+                                maxWidth: "100%",
+                                height: "auto"
+                            }} />
                     </div>
                     <div className='product-details-page-right-info-container'>
                         <p className='product-details-page-prod-name'>{prod.name}</p>
@@ -90,8 +93,7 @@ const ProductDetailsPage = () => {
                     </div>
                 </div>
             </div>
-            
-        )
+        );
     })
 
     return (

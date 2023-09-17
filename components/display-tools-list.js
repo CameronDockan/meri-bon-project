@@ -1,5 +1,5 @@
 import productData from "@/public/product-data/productData"
-import Image from "next/legacy/image"
+import Image from "next/image"
 import Link from 'next/link'
 
 const DisplayToolsList = () => {
@@ -16,11 +16,14 @@ const DisplayToolsList = () => {
                 width={100}
                 height={100}
                 className="tools-page-image-div-Image"
-            />
+                style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                }} />
             <p>{element.name}</p>
             </Link>
         </div>
-        )
+        );
     })
 
     return (

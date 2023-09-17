@@ -1,4 +1,4 @@
-import Image from "next/legacy/image"
+import Image from "next/image"
 import Link from 'next/link'
 import bonsaiPhoto from '../public/product-images/b1-1.png'
 import seedPhoto from '../public/product-images/s1.jpg'
@@ -18,7 +18,10 @@ const Main = () => {
                     src={bonsaiPhoto}
                     className='index-body-element-image'
                     alt='bonsai tree'
-                />
+                    style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                    }} />
             </div>
             <div className='index-body-element'>
                 <div className='product-link-container'>
@@ -28,7 +31,10 @@ const Main = () => {
                     src={seedPhoto}
                     className='index-body-element-image'
                     alt='seeds'
-                />
+                    style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                    }} />
             </div>
             <div className='index-body-element'>
                 <div className='product-link-container'>
@@ -38,7 +44,10 @@ const Main = () => {
                     src={toolPhoto}
                     className='index-body-element-image'
                     alt='bonsai gardening tools'
-                />
+                    style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                    }} />
             </div>
             <div className='index-body-element'>
                 <div className='product-link-container'>
@@ -48,11 +57,14 @@ const Main = () => {
                     src={miscPhoto}
                     className='index-body-element-image'
                     alt='i love bonsai shirt'
-                />
+                    style={{
+                        maxWidth: "100%",
+                        height: "auto"
+                    }} />
             </div>
         </div>
         </div>
-    )
+    );
 }
 
 export default Main
