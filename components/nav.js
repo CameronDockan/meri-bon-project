@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import AppContext from './app-context';
 import { useContext } from 'react';
@@ -28,7 +30,7 @@ const Nav = () => {
 
             <ul className="top-drop">
                 <li className='li-list-container'><Link className='link' href='/'>HOME</Link></li>
-                <li className='li-list-container shop-list-item'> <Link className='link' href='/shop'>SHOP</Link>
+                <li className='li-list-container shop-list-item'> <Link className='link' href='/shop/all'>SHOP</Link>
                     <ul className='shop-drop'>
                         <li className='bonsai-list-item'><Link className='link' href='/shop/bonsai'>BONSAI</Link></li>
                         <li><Link className='link' href='/shop/seeds'>SEEDS</Link></li>
@@ -38,7 +40,7 @@ const Nav = () => {
                 </li>
                 <li className='li-list-container'><Link className='link' href='#'>ABOUT</Link></li>
                 <li className='li-list-container'><Link className='link' href='#'>CONTACT</Link></li>
-                <li className='li-list-container'><Link className='link' href='/cart/cart'>{'CART' + ' (' + sumOfQuantity + ')'}</Link></li>
+                <li className='li-list-container'><Link className='link' href='/cart'>{'CART' + ' (' + sumOfQuantity + ')'}</Link></li>
             </ul>
         </nav>
     )

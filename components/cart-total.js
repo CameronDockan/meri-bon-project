@@ -1,3 +1,5 @@
+'use client'
+
 import AppContext from "./app-context";
 import { useContext } from "react";
 

@@ -1,5 +1,6 @@
+'use client'
+
 import AppContext from "@/components/app-context"
-import productData from "@/public/product-data/productData";
 import { useContext } from "react"
 
 const CheckoutPage = () => {

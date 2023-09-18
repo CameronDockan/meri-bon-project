@@ -3,7 +3,7 @@ import productData from '@/public/product-data/productData'
 import Nav from '@/components/nav';
 import Footer from '@/components/footer';
 import {useRouter} from 'next/router'
-import { useState, useEffect, useContext} from 'react';
+import { useEffect, useContext} from 'react';
 import Image from "next/image"
 import Link from 'next/link'
 import { AiOutlineArrowRight } from "react-icons/ai";

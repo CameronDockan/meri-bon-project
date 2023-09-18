@@ -8,7 +8,7 @@ import miscPhoto from '../public/product-images/m1.png'
 const Main = () => {
     return (
         <div className='index-body'>
-        <h1 className="index-body-title"><Link href='/shop'>Shop</Link></h1>
+        <h1 className="index-body-title"><Link href='/shop/all'>Shop</Link></h1>
         <div className="index-body-container">
             <div className='index-body-element'>
                 <div className='product-link-container'>

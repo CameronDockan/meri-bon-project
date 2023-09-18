@@ -1,9 +1,11 @@
-import Nav from '../components/nav'
-import Canvas from '../components/canvas'
-import Main from '../components/indexPage-main'
-import Footer from '../components/footer'
+'use client'
+
+import Nav from '@/components/nav'
+import Canvas from '@/components/canvas'
+import Main from '@/components/indexPage-main'
+import Footer from '@/components/footer'
 import { useState, useEffect } from 'react'
-import { AiFillSafetyCertificate } from 'react-icons/ai'
+// import { AiFillSafetyCertificate } from 'react-icons/ai'
 
 const Index = () => {
 
