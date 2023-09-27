@@ -25,17 +25,17 @@ const Nav = () => {
         <nav className="nav-container">
 
             <div className="logo">
-                <p>MERI-BON</p>
+                <Link className='link' href="#">MERI-BON</Link>
             </div>
 
             <ul className="top-drop">
                 <li className='li-list-container'><Link className='link' href='/'>HOME</Link></li>
                 <li className='li-list-container shop-list-item'> <Link className='link' href='/shop/all'>SHOP</Link>
                     <ul className='shop-drop'>
-                        <li className='bonsai-list-item'><Link className='link' href='/shop/bonsai'>BONSAI</Link></li>
-                        <li><Link className='link' href='/shop/seeds'>SEEDS</Link></li>
-                        <li><Link className='link' href='/shop/tools'>TOOLS</Link></li>
-                        <li><Link className='link' href='/shop/misc'>MISC</Link></li>
+                        <li className='bonsai-list-item'><Link className='inner-link' href='/shop/bonsai'>BONSAI</Link></li>
+                        <li><Link className='inner-link' href='/shop/seeds'>SEEDS</Link></li>
+                        <li><Link className='inner-link' href='/shop/tools'>TOOLS</Link></li>
+                        <li><Link className='inner-link' href='/shop/misc'>MISC</Link></li>
                     </ul>
                 </li>
                 <li className='li-list-container'><Link className='link' href='#'>ABOUT</Link></li>

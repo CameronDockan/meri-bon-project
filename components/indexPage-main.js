@@ -11,9 +11,7 @@ const Main = () => {
         <h1 className="index-body-title"><Link href='/shop/all'>Shop</Link></h1>
         <div className="index-body-container">
             <div className='index-body-element'>
-                <div className='product-link-container'>
-                    <Link className='product-link' href='/shop/bonsai'>Bonsai</Link>
-                </div>
+                <Link className='product-link' href='/shop/bonsai'>Bonsai</Link>
                 <Image
                     src={bonsaiPhoto}
                     className='index-body-element-image'
@@ -21,12 +19,11 @@ const Main = () => {
                     style={{
                         maxWidth: "100%",
                         height: "auto"
-                    }} />
+                        }} 
+                />
             </div>
             <div className='index-body-element'>
-                <div className='product-link-container'>
-                    <Link className='product-link' href='/shop/seeds'>Seeds</Link>
-                </div>
+                <Link className='product-link' href='/shop/seeds'>Seeds</Link>
                 <Image
                     src={seedPhoto}
                     className='index-body-element-image'
@@ -34,12 +31,11 @@ const Main = () => {
                     style={{
                         maxWidth: "100%",
                         height: "auto"
-                    }} />
+                        }} 
+                />
             </div>
             <div className='index-body-element'>
-                <div className='product-link-container'>
-                    <Link className='product-link' href='/shop/tools'>Tools</Link>
-                </div>
+                <Link className='product-link' href='/shop/tools'>Tools</Link>
                 <Image
                     src={toolPhoto}
                     className='index-body-element-image'
@@ -47,12 +43,11 @@ const Main = () => {
                     style={{
                         maxWidth: "100%",
                         height: "auto"
-                    }} />
+                        }} 
+                />
             </div>
             <div className='index-body-element'>
-                <div className='product-link-container'>
-                    <Link className='product-link' href='/shop/misc'>Misc</Link>
-                </div>
+                <Link className='product-link' href='/shop/misc'>Misc</Link>
                 <Image
                     src={miscPhoto}
                     className='index-body-element-image'
@@ -60,7 +55,8 @@ const Main = () => {
                     style={{
                         maxWidth: "100%",
                         height: "auto"
-                    }} />
+                        }} 
+                />
             </div>
         </div>
         </div>

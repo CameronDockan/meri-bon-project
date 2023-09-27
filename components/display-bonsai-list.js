@@ -8,7 +8,7 @@ const DisplayBonsaiList = () => {
         return (
             <div key={bon.id} className="bonsai-page-image-div">
                 <Link
-                    href={`/product/${bon.id}`}
+                    href={`/shop/bonsai/${bon.id}`}
                 >
                 <Image
                     src={bon.imgSrc}

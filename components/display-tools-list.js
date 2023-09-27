@@ -8,7 +8,7 @@ const DisplayToolsList = () => {
         return (
             <div key={element.id} className="tools-page-image-div">
             <Link
-                href={`/product/${element.id}`}
+                href={`/shop/tools/${element.id}`}
             >
             <Image
                 src={element.imgSrc}
