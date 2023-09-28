@@ -25,7 +25,7 @@ const Nav = () => {
         <nav className="nav-container">
 
             <div className="logo">
-                <Link className='link' href="#">MERI-BON</Link>
+                <Link className='link' href="/">MERI-BON</Link>
             </div>
 
             <ul className="top-drop">

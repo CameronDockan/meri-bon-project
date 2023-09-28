@@ -9,23 +9,22 @@ import AppContext from '@/components/app-context';
 import Nav from '@/components/nav';
 import Footer from '@/components/footer';
 
-export function generateStaticParams() {
-    const prodIDs = productData.map(prod => {
+const tools = productData.filter(prod => {
+    if (prod.tool === true) return true
+})
+
+export function generateStaticParams () {
+    const toolIDs = tools.map(tool => {
         return (
-            {id: `product${prod.id}`}
+            {toolID: `tool${tool.toolID}`}
         )
     })
-    return prodIDs
-    // return [{ id: '1' }, { id: '2' }, { id: '3' }]
+    return toolIDs
 }
 
-const ProductDetailsPage = ({params}) => {
-    const {id} = params;
-    console.log(id)
-    const selectedProdArr = productData.filter(prod => {
-        let prodID = `product${prod.id}`
-        if (id === prodID) return true
-    })
+const ToolDetailsPage = ({params}) => {
+
+    const id = params;
 
     const context = useContext(AppContext)
 
@@ -48,6 +47,7 @@ const ProductDetailsPage = ({params}) => {
         }
     }, [])
 
+
     let cartItemsQuantity = 0;
     let QuantitySum = 0;
 
@@ -59,17 +59,16 @@ const ProductDetailsPage = ({params}) => {
         QuantitySum = 0;
     }
 
-    
-    let selectedProduct = productData.filter(product => 'product' + product.id == id)
+    let selectedProduct = productData.filter(tool => 'tool' + tool.toolID == id.toolID)
     let selectedProductElement = selectedProduct.map(prod => {
 
         let prevProd;
-        if (prod.id <= 1) prevProd = productData.length
-        else prevProd = prod.id -1;
+        if (prod.toolID <= 1) prevProd = tools.length
+        else prevProd = prod.toolID -1;
 
         let nextProd;
-        if (prod.id >= productData.length) nextProd = 1;
-        else nextProd = prod.id + 1
+        if (prod.toolID >= tools.length) nextProd = 1;
+        else nextProd = prod.toolID + 1
 
         return (
             <div key={prod.id}>
@@ -79,19 +78,19 @@ const ProductDetailsPage = ({params}) => {
                         <li><AiOutlineArrowRight className='right-arrow-icon' /></li>
                         <li><Link href='/shop'>Shop</Link></li>
                         <li><AiOutlineArrowRight className='right-arrow-icon' /></li>
-                        <li>product {prod.id}</li>
+                        <li>tool {prod.toolID}</li>
                     </ul>
                     <ul className='product-details-page-right-nav-container'>
-                        <li><Link href={`/shop/all/product${prevProd}`}>Previous</Link></li>
+                        <li><Link href={`/shop/tools/tool${prevProd}`}>Previous</Link></li>
                         <li>|</li>
-                        <li><Link href={`/shop/all/product${nextProd}`}>Next</Link></li>
+                        <li><Link href={`/shop/tools/tool${nextProd}`}>Next</Link></li>
                     </ul>
                 </div>
                 <div className='product-details-page-main-info-container'>
                     <div className='product-details-page-left-info-container'>
                         <Image
                             src={prod.imgSrc}
-                            alt={"bonsai"}
+                            alt={"tools"}
                             width={800}
                             height={800}
                             priority={true}
@@ -128,6 +127,4 @@ const ProductDetailsPage = ({params}) => {
 
 }
 
-
-
-export default ProductDetailsPage
+export default ToolDetailsPage

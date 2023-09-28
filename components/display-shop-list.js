@@ -7,7 +7,7 @@ const DisplayShopList = () => {
         return (
             <div key={product.id} className="shop-page-image-div">
                 <Link
-                    href={`/shop/all/${product.id}`}
+                    href={`/shop/all/product${product.id}`}
                 >
                 <Image
                     src={product.imgSrc}

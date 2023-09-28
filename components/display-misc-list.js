@@ -8,7 +8,7 @@ const DisplayMiscList = () => {
         return (
             <div key={element.id} className="misc-page-image-div">
             <Link
-                href={`/shop/misc/${element.id}`}
+                href={`/shop/misc/misc${element.miscID}`}
             >
             <Image
                 src={element.imgSrc}

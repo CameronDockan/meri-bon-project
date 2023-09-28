@@ -9,6 +9,7 @@ const productData = [
         quantity: 1,
         brief: 'PRE-ORDER this Chinese Juniper Itoigawa Bonsai Tree, imported from Japan. Approximately 40-43cm tall. Ready for dispatch June/July 2023.',
         tree: true,
+        bonsaiID: 1,
         seed: false,
         tool: false,
         misc: false
@@ -21,6 +22,7 @@ const productData = [
         quantity: 1,
         brief: 'PRE-ORDER this Cork Bark Japanese Black Pine (Pinus Thunbergii) imported from Japan and ready for dispatch June/ July 2023. Approximately 28-30cm tall, and in a ceramic pot.',
         tree: true,
+        bonsaiID: 2,
         seed: false,
         tool: false,
         misc: false
@@ -33,6 +35,7 @@ const productData = [
         quantity: 1,
         brief: 'PRE-ORDER this Japanese White Pine imported from Japan and ready for dispatch June/ July 2023. Approximately 26-30cm tall.',
         tree: true,
+        bonsaiID: 3,
         seed: false,
         tool: false,
         misc: false
@@ -45,6 +48,7 @@ const productData = [
         quantity: 1,
         brief: 'Outdoor Mugo Pine Bonsai Tree stands approximately 33-37 tall wired to shape and in a ceramic pot.',
         tree: true,
+        bonsaiID: 4,
         seed: false,
         tool: false,
         misc: false
@@ -57,6 +61,7 @@ const productData = [
         quantity: 1,
         brief: 'Beautiful Japanese White Pine, approximately 43-50cm tall and in a ceramic pot. Imported from Japan.',
         tree: true,
+        bonsaiID: 5,
         seed: false,
         tool: false,
         misc: false
@@ -69,6 +74,7 @@ const productData = [
         quantity: 1,
         brief: 'Osakazuki Maple Bonsai Tree. Approximately 75-77cm tall and displayed in a plastic bonsai pot. This tree is an outdoor deciduous species. Due to the size, shape, value or weight of this piece it would need to be collected from our nursery.',
         tree: true,
+        bonsaiID: 6,
         seed: false,
         tool: false,
         misc: false
@@ -81,6 +87,7 @@ const productData = [
         quantity: 1,
         brief: 'Mountain Maple Bonsai Tree. Approximately 45-50cm tall and displayed in a plastic bonsai pot. This tree is an outdoor deciduous species.',
         tree: true,
+        bonsaiID: 7,
         seed: false,
         tool: false,
         misc: false
@@ -93,6 +100,7 @@ const productData = [
         quantity: 1,
         brief: 'Gorgeous Mountain Maple planted in a Mica Drum pot, stands approximately 70-75cm tall. This tree appears in a YouTube video. This would need to be collected from the nursery.',
         tree: true,
+        bonsaiID: 8,
         seed: false,
         tool: false,
         misc: false
@@ -105,6 +113,7 @@ const productData = [
         quantity: 1,
         brief: 'Outdoor Fruiting Japanese Quince Chaenomeles japonica, approximately 25-27cm tall and planted in a ceramic bonsai pot.',
         tree: true,
+        bonsaiID: 9,
         seed: false,
         tool: false,
         misc: false
@@ -117,6 +126,7 @@ const productData = [
         quantity: 1,
         brief: `Wisteria floribunda approximately 65-70cm tall (bottom of pot to top of tree) in a ceramic cascade pot and wired to shape. We wouldn't be able to send this so it would need to be COLLECTED.`,
         tree: true,
+        bonsaiID: 10,
         seed: false,
         tool: false,
         misc: false
@@ -131,6 +141,7 @@ const productData = [
         tree: false,
         seed: false,
         tool: true,
+        toolID: 1,
         misc: false
     },
     {
@@ -143,6 +154,7 @@ const productData = [
         tree: false,
         seed: false,
         tool: true,
+        toolID: 2,
         misc: false
     },
     {
@@ -155,6 +167,7 @@ const productData = [
         tree: false,
         seed: false,
         tool: true,
+        toolID: 3,
         misc: false
     },
     {
@@ -167,6 +180,7 @@ const productData = [
         tree: false,
         seed: false,
         tool: true,
+        toolID: 4,
         misc: false
     },
     {
@@ -178,6 +192,7 @@ const productData = [
         brief: 'Grow your own Japanese Black Pine (Pinus thunbergii) bonsai with these bonsai seeds. The Japanese Black Pine is an evergreen tree native to Japan. Bonsai seed pouch included bonsai seeds, growing instruction, and stratification instructions.Bonsai Seed pack includes approximately 15-20 seeds.',
         tree: false,
         seed: true,
+        seedID: 1,
         tool: false,
         misc: false
     },
@@ -190,6 +205,7 @@ const productData = [
         brief: 'Grow your own Coastal Redwood (Sequoia Sempervirens) bonsai with these bonsai seeds. The Coastal Redwood is an evergreen tree mainly found near the coast in California and Oregon. Bonsai seed pouch included bonsai seeds, growing instruction, and stratification instructions.Bonsai Seed pack includes approximately 8 seeds.',
         tree: false,
         seed: true,
+        seedID: 2,
         tool: false,
         misc: false
     },
@@ -202,6 +218,7 @@ const productData = [
         brief: 'Grow your own Japanese Red Maple (Acer Palmatum) bonsai with these bonsai seeds. The Japanese Red Maple is a decidiuos tree native Japan. Bonsai seed pouch included bonsai seeds, growing instruction, and stratification instructions.Bonsai Seed pack includes approximately 15-20 seeds.',
         tree: false,
         seed: true,
+        seedID: 3,
         tool: false,
         misc: false
     },
@@ -215,7 +232,8 @@ const productData = [
         tree: false,
         seed: false,
         tool: false,
-        misc: true
+        misc: true,
+        miscID: 1
     },
     {
         id:19,
@@ -227,7 +245,8 @@ const productData = [
         tree: false,
         seed: false,
         tool: false,
-        misc: true
+        misc: true,
+        miscID: 2
     },
 
 ]

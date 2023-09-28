@@ -9,23 +9,24 @@ import AppContext from '@/components/app-context';
 import Nav from '@/components/nav';
 import Footer from '@/components/footer';
 
-export function generateStaticParams() {
-    const prodIDs = productData.map(prod => {
+const seeds = productData.filter(prod => {
+    if (prod.seed === true) return true
+})
+
+export function generateStaticParams () {
+    const seedIDs = seeds.map(seed => {
         return (
-            {id: `product${prod.id}`}
+            {seedID: `seed${seed.seedID}`}
         )
     })
-    return prodIDs
-    // return [{ id: '1' }, { id: '2' }, { id: '3' }]
+    return seedIDs
 }
 
-const ProductDetailsPage = ({params}) => {
-    const {id} = params;
-    console.log(id)
-    const selectedProdArr = productData.filter(prod => {
-        let prodID = `product${prod.id}`
-        if (id === prodID) return true
-    })
+const SeedDetailsPage = ({params}) => {
+
+    const id = params;
+
+    console.log(params)
 
     const context = useContext(AppContext)
 
@@ -59,17 +60,17 @@ const ProductDetailsPage = ({params}) => {
         QuantitySum = 0;
     }
 
-    
-    let selectedProduct = productData.filter(product => 'product' + product.id == id)
+
+    let selectedProduct = productData.filter(seed => 'seed' + seed.seedID == id.seedID)
     let selectedProductElement = selectedProduct.map(prod => {
 
         let prevProd;
-        if (prod.id <= 1) prevProd = productData.length
-        else prevProd = prod.id -1;
+        if (prod.seedID <= 1) prevProd = seeds.length
+        else prevProd = prod.seedID -1;
 
         let nextProd;
-        if (prod.id >= productData.length) nextProd = 1;
-        else nextProd = prod.id + 1
+        if (prod.seedID >= seeds.length) nextProd = 1;
+        else nextProd = prod.seedID + 1
 
         return (
             <div key={prod.id}>
@@ -79,19 +80,19 @@ const ProductDetailsPage = ({params}) => {
                         <li><AiOutlineArrowRight className='right-arrow-icon' /></li>
                         <li><Link href='/shop'>Shop</Link></li>
                         <li><AiOutlineArrowRight className='right-arrow-icon' /></li>
-                        <li>product {prod.id}</li>
+                        <li>seed {prod.seedID}</li>
                     </ul>
                     <ul className='product-details-page-right-nav-container'>
-                        <li><Link href={`/shop/all/product${prevProd}`}>Previous</Link></li>
+                        <li><Link href={`/shop/seeds/seed${prevProd}`}>Previous</Link></li>
                         <li>|</li>
-                        <li><Link href={`/shop/all/product${nextProd}`}>Next</Link></li>
+                        <li><Link href={`/shop/seeds/seed${nextProd}`}>Next</Link></li>
                     </ul>
                 </div>
                 <div className='product-details-page-main-info-container'>
                     <div className='product-details-page-left-info-container'>
                         <Image
                             src={prod.imgSrc}
-                            alt={"bonsai"}
+                            alt={"seeds"}
                             width={800}
                             height={800}
                             priority={true}
@@ -128,6 +129,4 @@ const ProductDetailsPage = ({params}) => {
 
 }
 
-
-
-export default ProductDetailsPage
+export default SeedDetailsPage

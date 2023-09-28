@@ -8,7 +8,7 @@ const DisplaySeedsList = () => {
         return (
             <div key={element.id} className="seed-page-image-div">
             <Link
-                href={`/shop/seed/${element.id}`}
+                href={`/shop/seeds/seed${element.seedID}`}
             >
             <Image
                 src={element.imgSrc}

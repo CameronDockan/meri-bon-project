@@ -9,23 +9,27 @@ import AppContext from '@/components/app-context';
 import Nav from '@/components/nav';
 import Footer from '@/components/footer';
 
-export function generateStaticParams() {
-    const prodIDs = productData.map(prod => {
+const bonsais = productData.filter(prod => {
+    if (prod.tree === true) return true
+})
+
+export function generateStaticParams () {
+    const bonsaiIDs = bonsais.map(bon => {
         return (
-            {id: `product${prod.id}`}
+            {bonsaiID: `bonsai${bon.bonsaiID}`}
         )
     })
-    return prodIDs
-    // return [{ id: '1' }, { id: '2' }, { id: '3' }]
+    return bonsaiIDs
 }
 
-const ProductDetailsPage = ({params}) => {
-    const {id} = params;
-    console.log(id)
-    const selectedProdArr = productData.filter(prod => {
-        let prodID = `product${prod.id}`
-        if (id === prodID) return true
-    })
+const BonsaiDetailsPage = ({params}) => {
+    // {id} destructering was causing id to equal undefined so I chose not to destructure
+    const id = params;
+
+    // const selectedBonsaiArr = productData.filter(bon => {
+    //     let bonID = `bonsai${bon.bonsaiID}`
+    //     if (id === bonID) return true 
+    // })
 
     const context = useContext(AppContext)
 
@@ -59,17 +63,16 @@ const ProductDetailsPage = ({params}) => {
         QuantitySum = 0;
     }
 
-    
-    let selectedProduct = productData.filter(product => 'product' + product.id == id)
+    let selectedProduct = productData.filter(bon => 'bonsai' + bon.bonsaiID == id.bonsaiID)
     let selectedProductElement = selectedProduct.map(prod => {
 
         let prevProd;
-        if (prod.id <= 1) prevProd = productData.length
-        else prevProd = prod.id -1;
+        if (prod.bonsaiID <= 1) prevProd = productData.length
+        else prevProd = prod.bonsaiID -1;
 
         let nextProd;
-        if (prod.id >= productData.length) nextProd = 1;
-        else nextProd = prod.id + 1
+        if (prod.bonsaiID >= productData.length) nextProd = 1;
+        else nextProd = prod.bonsaiID + 1
 
         return (
             <div key={prod.id}>
@@ -79,12 +82,12 @@ const ProductDetailsPage = ({params}) => {
                         <li><AiOutlineArrowRight className='right-arrow-icon' /></li>
                         <li><Link href='/shop'>Shop</Link></li>
                         <li><AiOutlineArrowRight className='right-arrow-icon' /></li>
-                        <li>product {prod.id}</li>
+                        <li>bonsai {prod.bonsaiID}</li>
                     </ul>
                     <ul className='product-details-page-right-nav-container'>
-                        <li><Link href={`/shop/all/product${prevProd}`}>Previous</Link></li>
+                        <li><Link href={`/shop/bonsai/bonsai${prevProd}`}>Previous</Link></li>
                         <li>|</li>
-                        <li><Link href={`/shop/all/product${nextProd}`}>Next</Link></li>
+                        <li><Link href={`/shop/bonsai/bonsai${nextProd}`}>Next</Link></li>
                     </ul>
                 </div>
                 <div className='product-details-page-main-info-container'>
@@ -125,9 +128,7 @@ const ProductDetailsPage = ({params}) => {
             <Footer />
         </>
         )
-
 }
 
 
-
-export default ProductDetailsPage
+export default BonsaiDetailsPage
