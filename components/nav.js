@@ -38,8 +38,8 @@ const Nav = () => {
                         <li><Link className='inner-link' href='/shop/misc'>MISC</Link></li>
                     </ul>
                 </li>
-                <li className='li-list-container'><Link className='link' href='#'>ABOUT</Link></li>
-                <li className='li-list-container'><Link className='link' href='#'>CONTACT</Link></li>
+                <li className='li-list-container'><Link className='link' href='/about'>ABOUT</Link></li>
+                <li className='li-list-container'><Link className='link' href='/contact'>CONTACT</Link></li>
                 <li className='li-list-container'><Link className='link' href='/cart'>{'CART' + ' (' + sumOfQuantity + ')'}</Link></li>
             </ul>
         </nav>

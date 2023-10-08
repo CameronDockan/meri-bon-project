@@ -4,7 +4,6 @@
     box-sizing: border-box;
     text-decoration: none;
     color: black;
-    /* color: white; */
 }
 /* 
 #437375
@@ -65,20 +64,33 @@ nav {
     display: none;
     transition: all .5s ease;
 
-    top: 58px;
+    top: 57px;
     width: 100%;
     flex-direction: column;
     align-items: center;
 }
 
 .shop-drop li {
-    display: none;
     list-style-type: none;
-    padding: 15px;
+    padding: 0px;
     width: 100%;
     transition: all .5s ease;
+    /* border: 1px solid blue; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
+
+.shop-drop li a {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid red; */
+    padding: 15px;
+    margin: 0;
+}
 
 
 /* hover effects */
@@ -222,15 +234,15 @@ nav {
 #FF8946
 */
 .footer-container {
-    /* background-color: whitesmoke; */
     background-color: #437375;
+    border: 2px solid black;
 }
 
 .footer-container ul {
     display: flex;
     justify-content: space-around;
     font-size: 1.5em;
-    padding: 20px;
+    padding: 15px;
     list-style-type: none;
 }
 
@@ -247,40 +259,35 @@ nav {
 .socials-container {
     display: flex;
     justify-content: center;
-    margin: 20px;
+    margin: 15px;
     gap: 100px;
 }
 
 .social-icons {
     font-size: 2em;
-    /* background-color: beige; */
     transition: all .5s;
 }
 
 .social-icons:hover {
     /* can't change color with color */
-    /* check docs */
-    /* https://github.com/react-icons/react-icons#configuration */
-    /* color: #BEFCFE; */
+    /* change svg color with fill */
     font-size: 2.5em;
     fill: #BEFCFE;
 }
 
 .address {
     text-align: center;
-    margin: 20px;
+    margin: 15px;
     font-size: 1.5em;
 }
 
 .copyright {
     text-align: center;
-    margin: 20px;
+    margin: 15px;
     font-size: 1.5em;
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 5px;
-    
+    align-items: center;    
 }
 
 .copyright-icon {
@@ -538,16 +545,147 @@ nav {
     justify-content: center;
 }
 
-.check-out-button-container {
+.checkout-button-container {
     display: flex;
     justify-content: center;
     padding: 20px;
 }
 
-.check-out-button {
+.checkout-button {
     text-decoration: none;
+    width: 40%;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #437375;
+    color: aliceblue;
+    font-size: 20px;
+    transition: all .2s ease ;
+    border: 2px solid black;
+    cursor: pointer;
 }
+
+.checkout-button:hover {
+    background-color: #BEFCFE;
+    color: black;
+}
+
 
 .empty-cart-message {
     text-align: center;
+}
+
+/* ABOUT PAGE */
+
+.about-page-main-container {
+    width: 100vw;
+    height: auto;
+    /* border: 2px solid red; */
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.about-page-top-container {
+    width: 100%;
+    height: auto;
+    /* border: 2px solid rgb(18, 82, 244); */
+    padding: 15px 45px;
+}
+
+.about-title-container {
+    border: 2px solid black;
+    border-radius: 20px;
+    margin: 15px;
+}
+
+.about-title-container h1 {
+    font-size: 60px;
+    text-align: center;
+}
+
+.about-text-container {
+    border: 2px solid black;
+    border-radius: 20px;
+    margin: 15px;
+    padding: 15px;
+}
+
+.about-page-top-container p {
+    font-size: 20px;
+}
+
+.about-page-bottom-container {
+    width: 100%;
+    height: auto;
+    /* border: 2px solid rgb(18, 82, 244); */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 15px;
+}
+
+/* CONTACT PAGE */
+
+.contact-main-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid blue;
+    padding: 15px;
+    background-color: aliceblue;
+}
+
+.contact-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    border: 2px solid #437375;
+    padding: 15px;
+    margin: 15px;
+}
+
+.contact-info-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 20px;
+    border: 2px solid #437375;
+    /* padding: 15px; */
+    width: auto;
+}
+
+.contact-info-middle-column {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    /* border: 2px solid #437375; */
+}
+
+.contact-minor-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    /* border: 2px solid black; */
+    /* padding: 15px; */
+}
+
+.contact-minor-info-container h2 {
+    margin: 15px;
+    text-align: center;
+}
+
+.contact-minor-info-container p,
+.contact-minor-info-container a {
+    margin: 5px;
+    text-align: center;
+    font-size: 24px;
 }

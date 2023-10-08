@@ -1,8 +1,7 @@
 const CartCheckoutButton = () => {
     return (
-        <div className="check-out-button-container">
-            <button className="check-out-button">check out</button>
-
+        <div className="checkout-button-container">
+            <button className="checkout-button">CHECK OUT</button>
         </div>
     )
 }

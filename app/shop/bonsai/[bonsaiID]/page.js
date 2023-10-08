@@ -67,11 +67,11 @@ const BonsaiDetailsPage = ({params}) => {
     let selectedProductElement = selectedProduct.map(prod => {
 
         let prevProd;
-        if (prod.bonsaiID <= 1) prevProd = productData.length
+        if (prod.bonsaiID <= 1) prevProd = bonsais.length
         else prevProd = prod.bonsaiID -1;
 
         let nextProd;
-        if (prod.bonsaiID >= productData.length) nextProd = 1;
+        if (prod.bonsaiID >= bonsais.length) nextProd = 1;
         else nextProd = prod.bonsaiID + 1
 
         return (
