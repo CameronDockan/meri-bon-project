@@ -26,8 +26,8 @@ const Canvas = () => {
         const meriText = new Image ()
         meriText.src ='/meribon-text.png'
 
-        const ABM = new Image ()
-        ABM.src = '/ABM.png'
+        // const ABM = new Image ()
+        // ABM.src = '/ABM.png'
 
         const titleStickerImage = new Image ()
         titleStickerImage.src = '/title-sticker.png'

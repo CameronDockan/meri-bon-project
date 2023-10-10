@@ -3,6 +3,7 @@
 'use client'
 
 import '../styles/styles.css'
+import '../styles/mobileNav.css'
 import {useState, useEffect} from 'react'
 import AppContext from "@/components/app-context"
 

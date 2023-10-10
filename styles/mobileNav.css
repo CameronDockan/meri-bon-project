@@ -1,0 +1,106 @@
+.mobile-ul-container {
+    display: none;
+}
+.mobile-ul {
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    /* list-style:lower-roman; */
+    /* list-style-position: inside; */
+    list-style: none;
+    flex-direction: column;
+    border: 2px solid blue;
+    padding: 20px;
+
+    counter-reset: mobile-main 0;
+}
+
+/* .mobile-ul > li:nth-child(1)::before {
+    content: counters(section_counter, ".", decimal-leading-zero);
+} */
+.mobile-ul > li::before {
+    counter-increment: mobile-main;
+    content: counter(mobile-main, lower-roman) ". ";
+}
+
+.mobile-ul > li {
+    padding: 15px;
+}
+
+
+.mobile-ul * {
+    font-size: 34px;
+}
+
+.mobile-shop-li {
+    border: 2px solid black;
+    position: relative;
+}
+
+.mobile-shop-drop {
+    border: 2px solid blueviolet;
+
+    /* counter-reset: mobile-minor; */
+    /* padding-left: 40px; */
+    /* width: 0;
+    height: 0;
+    opacity: 0; */
+}
+
+
+.mobile-shop-drop > li {
+    list-style: none;
+    border: 1px solid black;
+}
+
+.mobile-shop-drop > li::before {
+    /* counter-increment: mobile-minor;
+    content: counter(mobile-minor, lower-roman) ". "; */
+    content: " - ";
+    padding-left: 80px;
+}
+
+.mobile-shop-drop * {
+    font-size: 25px;
+}
+
+#drop-btn {
+    background-color: rgba(0,0,0,0);
+    border: rgba(0,0,0,0);
+    position: absolute;
+    top: 25px;
+    right: 55px;
+}
+
+#drop-btn > div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 650px) {
+    nav {
+        position: fixed;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        z-index: 2;
+    }
+    .mobile-ul-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: var(--nav-height);
+        left: -1px;
+        width: calc(100vw + 1px);
+        height: calc(100vh + 1px);
+        background-color: var(--bright-blue);
+        z-index: 2;
+    }
+    .mobile-ul {
+        display: flex;
+    }
+}
