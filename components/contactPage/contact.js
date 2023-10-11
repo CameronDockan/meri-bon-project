@@ -2,7 +2,9 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import helixTree from "@/public/helix-tree.png"
+// import helixTree from "@/public/helix-tree.png"
+import helixTree from "@/public/helix-tree-white.png"
+
 import { useState } from "react"
 
 const Contact = () => {

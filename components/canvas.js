@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+/**@type {HTMLCanvasElement}*/
+
 import {useEffect, useRef} from 'react'
 
 const Canvas = () => {
@@ -24,7 +26,10 @@ const Canvas = () => {
         robinSprite.src = '/small-pixel-robin.png'
 
         const meriText = new Image ()
-        meriText.src ='/meribon-text.png'
+        // meriText.src ='/meribon-text.png'
+        meriText.src ='/meribon-text-white-6x5.png'
+        // meriText.src ='/meribon-text-white-5x5.png'
+
 
         // const ABM = new Image ()
         // ABM.src = '/ABM.png'
@@ -158,11 +163,16 @@ const Canvas = () => {
             gameFrame++;
             ctx.clearRect(0,0,cnvs.width,cnvs.height)
 
+            ctx.fillStyle = "#00082f";
+            ctx.fillRect(0,0,cnvs.width, cnvs.height)
+
             bonsai.draw(ctx);
             bonsai.update();
 
+            // TEXT
             ctx.drawImage(meriText, bonsai.x, bonsai.y + 10, 500, 500)
-            // ctx.drawImage(ABM, bonsai.x, cnvs.height - 100, 500, 200)
+
+            // STICKERS
             ctx.drawImage(titleStickerImage, 0, 0, 300, 300);
             ctx.drawImage(ctaSticker, cnvs.width-300, 0, 300, 300)
 
