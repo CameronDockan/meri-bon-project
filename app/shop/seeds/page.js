@@ -1,6 +1,6 @@
-import DisplaySeedsList from "@/components/display-seeds-list"
-import Nav from "@/components/nav"
-import Footer from "@/components/footer"
+import DisplaySeedsList from "@/components/productLists/display-seeds-list"
+import Nav from "@/components/nav/nav"
+import Footer from "@/components/footer/footer"
 
 const SeedsListPage = () => {
     return (

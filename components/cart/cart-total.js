@@ -1,11 +1,11 @@
 'use client'
 
-import AppContext from "./app-context";
-import { useContext } from "react";
+import CartContext from "../cart-context.js"
+import { useContext } from "react"
 
 const CartTotal = () => {
 
-    const context = useContext(AppContext)
+    const context = useContext(CartContext)
 
     let totalPrice = 0;
     if (context.cart && context.cart.length > 0) {

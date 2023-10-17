@@ -1,4 +1,7 @@
+'use client'
+
 /* eslint-disable @next/next/no-img-element */
+
 /**@type {HTMLCanvasElement}*/
 
 import {useEffect, useRef} from 'react'

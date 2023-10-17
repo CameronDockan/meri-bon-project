@@ -2,11 +2,11 @@
 
 import Image from "next/image"
 import { useContext, useEffect} from "react"
-import AppContext from "./app-context"
+import CartContext from "../cart-context.js"
 
 const CartItems = () => {
 
-    const context = useContext(AppContext)
+    const context = useContext(CartContext)
 
 
     // console.log(context.cart)

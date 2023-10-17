@@ -5,9 +5,9 @@ import { useEffect, useContext} from 'react';
 import Image from "next/image"
 import Link from 'next/link'
 import { AiOutlineArrowRight } from "react-icons/ai";
-import AppContext from '@/components/app-context';
-import Nav from '@/components/nav';
-import Footer from '@/components/footer';
+import CartContext from '@/components/cart-context';
+import Nav from '@/components/nav/nav';
+import Footer from '@/components/footer/footer';
 
 const miscs = productData.filter(misc => {
     if (misc.misc === true) return true
@@ -25,7 +25,7 @@ export function generateStaticParams () {
 const MiscDetailsPage = ({params}) => {
     const id = params;
 
-    const context = useContext(AppContext)
+    const context = useContext(CartContext)
 
     const addToCart = (prod) => {
         context.setCart(

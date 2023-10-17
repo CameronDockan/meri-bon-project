@@ -1,6 +1,6 @@
-import DisplayBonsaiList from "@/components/display-bonsai-list"
-import Nav from "@/components/nav"
-import Footer from "@/components/footer"
+import DisplayBonsaiList from "@/components/productLists/display-bonsai-list"
+import Nav from "@/components/nav/nav"
+import Footer from "@/components/footer/footer"
 
 const BonsaiListPage = () => {
     return (

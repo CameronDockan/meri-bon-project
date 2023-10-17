@@ -1,13 +1,21 @@
 'use client'
 
-import Link from 'next/link'
-import AppContext from './app-context';
+import Link from 'next/link';
+import CartContext from '@/components/cart-context'
 import { useContext, useState } from 'react';
+import Image from 'next/image';
+
+// import logoGroup from '@/public/meri-bon-logo/logo-group.svg'
+// import logoGroup1 from '@/public/meri-bon-logo/logo-group1.svg'
+
+import logoGroup2 from '@/public/meri-bon-logo/logo-group2.svg';
+import meriBon from '@/public/meri-bon-logo/MERIBON.svg';
+import NavFiller from './nav-filler';
+
 
 const Nav = () => {
-
     // cart
-    const context = useContext(AppContext)
+    const context = useContext(CartContext)
 
         let cartItemsQuantity;
         let sumOfQuantity;
@@ -40,18 +48,44 @@ const Nav = () => {
         setIsDropped(!isDropped)
         console.log(isDropped)
     }
-        
 
     return (
+        <>
+        <NavFiller />
+
         <nav className="nav-container">
 
-            <div className="logo">
-                <Link className='link' href="/">MERI-BON</Link>
+            <div className='logo-main-container'>
+                {/* <div className='logo-svg-container one'>
+                    <Image
+                    alt='logo-group'
+                    src={logoGroup2}
+                    width={60}
+                    height={60}
+                    />
+                </div> */}
+                <div className='logo-svg-container two'>
+                    <Image
+                    alt='meri-bon-text'
+                    src={meriBon}
+                    width={100}
+                    height={100}
+                    />
+                </div>
+                {/* <div className='logo-svg-container three'>
+                    <Image
+                    alt='logo-group'
+                    src={logoGroup2}
+                    width={60}
+                    height={60}
+                    />
+                </div> */}
             </div>
 
+
             <ul className="top-ul">
-                <li className='li-list-container'><Link className='link' href='/'>HOME</Link></li>
-                <li className='li-list-container shop-list-item'> <Link className='link' href='/shop/all'>SHOP</Link>
+                <li><Link className='link' href='/'>HOME</Link></li>
+                <li className=' shop-list-item'><Link className='link' href='/shop/all'>SHOP</Link>
                     <ul className='shop-drop'>
                         <li className='bonsai-list-item'><Link className='inner-link' href='/shop/bonsai'>BONSAI</Link></li>
                         <li><Link className='inner-link' href='/shop/seeds'>SEEDS</Link></li>
@@ -59,9 +93,9 @@ const Nav = () => {
                         <li><Link className='inner-link' href='/shop/misc'>MISC</Link></li>
                     </ul>
                 </li>
-                <li className='li-list-container'><Link className='link' href='/about'>ABOUT</Link></li>
-                <li className='li-list-container'><Link className='link' href='/contact'>CONTACT</Link></li>
-                <li className='li-list-container'><Link className='link' href='/cart'>{'CART' + ' (' + sumOfQuantity + ')'}</Link></li>
+                <li><Link className='link' href='/about'>ABOUT</Link></li>
+                <li><Link className='link' href='/contact'>CONTACT</Link></li>
+                <li><Link className='link' href='/cart'>{'CART' + ' (' + sumOfQuantity + ')'}</Link></li>
             </ul>
 
             <div className={menuIsActive ? 'mobile-ul-container active' : 'mobile-ul-container inactive'}>
@@ -104,6 +138,7 @@ const Nav = () => {
                 <div className={menuIsActive ? 'burger-menu-text-container active' : 'burger-menu-text-container inactive'}><p>MENU</p></div>
             </button>
         </nav>
+        </>
     )
 }
 export default Nav

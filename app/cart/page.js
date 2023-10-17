@@ -1,6 +1,6 @@
-import Nav from "@/components/nav"
-import Footer from "@/components/footer"
-import ShoppingCart from "@/components/shopping-cart"
+import Nav from "@/components/nav/nav"
+import Footer from "@/components/footer/footer"
+import ShoppingCart from "@/components/cart/shopping-cart"
 
 const CartPage = () => {
 

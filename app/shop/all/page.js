@@ -1,7 +1,7 @@
 // import DisplaySingleProduct from "@/components/displayPD"
-import DisplayShopList from "@/components/display-shop-list"
-import Nav from "@/components/nav"
-import Footer from "@/components/footer"
+import DisplayShopList from "@/components/productLists/display-shop-list"
+import Nav from "@/components/nav/nav"
+import Footer from "@/components/footer/footer"
 
 const ShopListPage = () => {
     return (

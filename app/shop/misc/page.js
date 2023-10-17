@@ -1,6 +1,6 @@
-import DisplayMiscList from "@/components/display-misc-list"
-import Nav from "@/components/nav"
-import Footer from "@/components/footer"
+import DisplayMiscList from "@/components/productLists/display-misc-list"
+import Nav from "@/components/nav/nav"
+import Footer from "@/components/footer/footer"
 
 const MiscListPage = () => {
     return (

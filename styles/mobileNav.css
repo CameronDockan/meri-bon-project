@@ -3,7 +3,8 @@
 .mobile-ul-container {
     display: none;
     backdrop-filter: blur(10px);
-    background-color: rgba(190, 252, 254, .8);
+    /* background-color: rgba(190, 252, 254, .8); */
+    background-color: rgba(67, 115, 117, .8);
     position: fixed;
     top: var(--nav-height);
     left: -1px;
@@ -16,7 +17,9 @@
 
 
 .mobile-ul {
-    border: 2px solid blue;
+    border-radius: 10px;
+    border: 2px solid var(--aliceBlue);
+    box-shadow: inset 0px 0px 20px 0px var(--aliceBlue);
     background-color: var(--bright-blue);
     display: none;
     justify-content: center;
@@ -29,6 +32,14 @@
     padding: 20px 10%;
 
     counter-reset: mobile-main 0;
+}
+
+.mobile-ul * {
+    /* color: var(--dark-green); */
+    /* color: var(--bonsai-brown); */
+    color: black;
+    /* color: var(--aliceBlue); */
+
 }
 
 /* .mobile-ul > li:nth-child(1)::before {

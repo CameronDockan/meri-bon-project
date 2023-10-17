@@ -1,11 +1,11 @@
 'use client'
 
-import AppContext from "@/components/app-context"
+import CartContext from "@/components/cart-context"
 import { useContext } from "react"
 
 const CheckoutPage = () => {
 
-    const context = useContext(AppContext)
+    const context = useContext(CartContext)
 
     let totalPrice = 0;
 

@@ -4,8 +4,9 @@
 
 import '../styles/styles.css'
 import '../styles/mobileNav.css'
+import '../styles/navFiller.css'
 import {useState, useEffect} from 'react'
-import AppContext from "@/components/app-context"
+import CartContext from '@/components/cart-context'
 
 export default function RootLayout({ children }) {
 
@@ -24,9 +25,9 @@ export default function RootLayout({ children }) {
     return (
       <html lang="en">
         <body>
-          <AppContext.Provider value={{cart, setCart}}>
+          <CartContext.Provider value={{cart, setCart}}>
             {children}
-          </AppContext.Provider>
+          </CartContext.Provider>
         </body>
       </html>
     )

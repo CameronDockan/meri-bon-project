@@ -1,6 +1,6 @@
-import Nav from "@/components/nav"
-import Footer from "@/components/footer"
-import AboutPageInfo from "@/components/about-page-info"
+import Nav from "@/components/nav/nav"
+import Footer from "@/components/footer/footer"
+import AboutPageInfo from "@/components/aboutPage-info"
 
 const AboutPage = () => {
     return (

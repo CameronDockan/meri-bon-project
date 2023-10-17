@@ -1,6 +1,6 @@
-import DisplayToolsList from "@/components/display-tools-list"
-import Nav from "@/components/nav"
-import Footer from "@/components/footer"
+import DisplayToolsList from "@/components/productLists/display-tools-list"
+import Nav from "@/components/nav/nav"
+import Footer from "@/components/footer/footer"
 
 const ToolsListPage = () => {
     return (

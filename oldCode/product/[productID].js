@@ -1,19 +1,19 @@
 // dynamic route returns a string which is why == is used instead of === when targeting prod.id == productID
 import productData from '@/public/product-data/productData'
-import Nav from '@/components/nav';
-import Footer from '@/components/footer';
+import Nav from '@/components/nav/nav';
+import Footer from '@/components/footer/footer';
 import {useRouter} from 'next/router'
 import { useEffect, useContext} from 'react';
 import Image from "next/image"
 import Link from 'next/link'
 import { AiOutlineArrowRight } from "react-icons/ai";
-import AppContext from '@/components/app-context';
+import CartContext from '@/components/cart-context';
 
 const ProductDetailsPage = () => {
     const router = useRouter();
     const productID = router.query.productID;
 
-    const context = useContext(AppContext)
+    const context = useContext(CartContext)
 
     const addToCart = (prod) => {
         context.setCart(
