@@ -2,6 +2,10 @@
 
 const ClientDog = ({children}) => {
     return (
-        {children}
+        <>
+            {children}
+        </>
     )
 }
+
+export default ClientDog

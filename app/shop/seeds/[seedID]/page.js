@@ -5,7 +5,7 @@ import { useEffect, useContext} from 'react';
 import Image from "next/image"
 import Link from 'next/link'
 import { AiOutlineArrowRight } from "react-icons/ai";
-import CartContext from '@/components/cart-context';
+import {CartContext} from '@/components/cart-context';
 import Nav from '@/components/nav/nav';
 import Footer from '@/components/footer/footer';
 

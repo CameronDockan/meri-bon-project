@@ -1,21 +1,18 @@
 'use client'
 
-import Link from 'next/link';
-import CartContext from '@/components/cart-context'
-import { useContext, useState } from 'react';
 import Image from 'next/image';
-
-// import logoGroup from '@/public/meri-bon-logo/logo-group.svg'
-// import logoGroup1 from '@/public/meri-bon-logo/logo-group1.svg'
-
-import logoGroup2 from '@/public/meri-bon-logo/logo-group2.svg';
+import Link from 'next/link';
+import {CartContext} from '@/components/cart-context'
 import meriBon from '@/public/meri-bon-logo/MERIBON.svg';
 import NavFiller from './nav-filler';
+import { useContext, useState } from 'react';
 
 
 const Nav = () => {
     // cart
     const context = useContext(CartContext)
+
+    // console.log(context)
 
         let cartItemsQuantity;
         let sumOfQuantity;

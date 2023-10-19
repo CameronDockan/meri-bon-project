@@ -1,6 +1,3 @@
-let weather = {
-    'apiKey': '9a6bdb2a44bc588e8cc941bc4d93cf72',
-}
 
 /* 
 san diego -- imperial system
@@ -8,8 +5,6 @@ https://api.openweathermap.org/data/2.5/weather?lat=32.715736&lon=-117.161087&un
 san diego -- metric system
 https://api.openweathermap.org/data/2.5/weather?lat=32.715736&lon=-117.161087&units=metric&appid=9a6bdb2a44bc588e8cc941bc4d93cf72
 */
-
-
 
 
 // i.e. GEOCODING
@@ -26,3 +21,14 @@ https://api.openweathermap.org/data/2.5/weather?lat=32.715736&lon=-117.161087&un
 /*
     https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
 */
+
+let weather = {
+    'apiKey': '9a6bdb2a44bc588e8cc941bc4d93cf72',
+    fetchWeather: function () {
+        fetch('https://api.openweathermap.org/data/2.5/weather?lat=32.715736&lon=-117.161087&units=imperial&appid=9a6bdb2a44bc588e8cc941bc4d93cf72')
+        .then(response => response.json())
+        .then(data => console.log(data))
+    }
+}
+
+export default weather

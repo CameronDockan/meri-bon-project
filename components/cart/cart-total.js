@@ -1,6 +1,6 @@
 'use client'
 
-import CartContext from "../cart-context.js"
+import {CartContext} from "../cart-context.js"
 import { useContext } from "react"
 
 const CartTotal = () => {
