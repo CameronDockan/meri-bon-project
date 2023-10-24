@@ -17,9 +17,9 @@ const Index = (params, searchParams) => {
             <Nav />
             <Canvas />
 
-            <ClientWeather>
+            {/* <ClientWeather>
                 <ServerWeather />
-            </ClientWeather>
+            </ClientWeather> */}
             
             <Main />
             <Footer />

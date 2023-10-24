@@ -1,7 +1,5 @@
 'use client'
 
-// import { useRouter } from "next/navigation";
-// import { useState } from "react";
 import { useEffect, useState } from "react"
 
 const ClientWeather = ({children}) => {
@@ -50,9 +48,8 @@ const ClientWeather = ({children}) => {
 
     return (
         <>
-            {/* <h1 style={{color:'aliceBlue'}}>{coordinates.latitude}</h1>
-            <h1 style={{color:'aliceBlue'}}>{coordinates.longitude}</h1> */}
             <h1 style={{color:'aliceBlue'}}>{JSON.stringify(data)}</h1>
+            {children}
 
         </>
     )
