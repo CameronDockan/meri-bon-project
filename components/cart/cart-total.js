@@ -17,7 +17,7 @@ const CartTotal = () => {
             </div>
         )
     } // first if statement's ending curly brace
-    else return null
+    else return <h1 className="empty-cart-message">Empty Cart</h1>
 }
 
 

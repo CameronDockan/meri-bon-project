@@ -5,6 +5,7 @@ import { useContext } from "react"
 
 const CheckoutPage = () => {
 
+
     const context = useContext(CartContext)
 
     let totalPrice = 0;
@@ -14,8 +15,9 @@ const CheckoutPage = () => {
         if (cartItems.length > 0) totalPrice = cartItems.reduce((a,v) => a + v);
     }
 
-
+    
     let listOfPurchasedItems;
+
     if (context.cart && context.cart.length > 0) {
         listOfPurchasedItems = context.cart.map(prod =>
             <li key={prod.id}>
@@ -31,9 +33,7 @@ const CheckoutPage = () => {
                 <p>for ${totalPrice}</p>
             </div>
         )
-    } 
-    
-    else {
+    } else {
         return (
             <div>
                 <h1>You didn't purchase any items</h1>

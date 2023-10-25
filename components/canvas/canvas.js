@@ -4,18 +4,33 @@
 
 /**@type {HTMLCanvasElement}*/
 
-import {useEffect, useRef} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import { FaSave, FaThemeisle } from 'react-icons/fa'
 
 const Canvas = () => {
     const cnvsRef = useRef(null)
 
+    const [cnvsWidth, setWidth] = useState(window.innerWidth)
+
+    const changeCanvasWidth = () => {
+        setWidth(window.innerWidth);
+    }
+
+        // window.addEventListener('resize', changeCanvasWidth)
+
+        // return () => {
+        //     window.removeEventListener('resize', changeCanvasWidth)
+        // }
+
+
     useEffect(() => {
+
+        window.addEventListener('resize', changeCanvasWidth)
 
         const cnvs = cnvsRef.current
         const ctx = cnvs.getContext('2d')
 
-        cnvs.width = window.innerWidth;
+        cnvs.width = cnvsWidth;
         cnvs.height = 400;
 
         const bonsaiSprite = new Image()
@@ -46,6 +61,9 @@ const Canvas = () => {
         const sunSprite = new Image()
         sunSprite.src = '/weather/sun.png'
 
+        const sunRaysSprite = new Image()
+        sunRaysSprite.src = '/weather/smallSun1.png'
+
         const cloudSprite = new Image()
         cloudSprite.src = '/weather/cloud.png'
 
@@ -61,6 +79,8 @@ const Canvas = () => {
 
         const biColorGradient = 'background-image: linear-gradient(to top, #f0f8ff, #a9b7c7, #697992, #313f5f, #00082f)'
         const triColorGradient = 'background-image: linear-gradient(to top, #f0f8ff, #f0f8ff, #f0f8ff, #f0f8ff, #f0f8ff, #d8e2ec, #c0ccd9, #a9b7c7, #78889f, #4c5b78, #243253, #00082f);'
+
+        const THUNDER = true;
 
 
         let gameFrame = 0;
@@ -184,95 +204,144 @@ const Canvas = () => {
         const robin = new Robin ();
 
         class Sun {
-            constructor() {
+            constructor(x) {
                 this.w = 175;
                 this.h = 175;
-                this.x = cnvs.width - this.w - 100
+                this.x = x;
                 this.y = 0
+                this.cX = this.x + this.w * 0.5;
+                this.cY = this.y + this.h * 0.5;
+                this.radialR0 = 0;
+                this.radialR1 = this.w;
+                this.yellow = 'rgba(255, 251, 168, .2)'
+                this.orange = 'rgba(229, 90, 29, .2)'
+                // this.startAngle = Math.PI/2;
+                // this.endAngle = this.startAngle + Math.PI/2;
+                this.startAngle = 0;
+                this.endAngle = Math.PI * 2;
+
+                this.raysW = 275;
+                this.raysH = 276;
+                this.raysX = this.cX - this.raysW * 0.5;
+                this.raysY = this.cY - this.raysH * 0.5;
+
             }
             draw(ctx) {
+
+                // //gradient
+                // ctx.save();
+                // const gradient = ctx.createRadialGradient(this.cX, this.cY, this.radialR0, this.cX, this.cY, this.radialR1);
+                // gradient.addColorStop(0, this.yellow);
+                // gradient.addColorStop(1, darkBlue);
+            
+                // ctx.fillStyle = gradient;
+                // // arc
+                // ctx.beginPath();
+                // ctx.moveTo(this.cX, this.cY);
+                // ctx.arc(this.cX, this.cY, this.radialR1, this.startAngle, this.endAngle);
+                // ctx.closePath();
+                // ctx.fill();
+                // ctx.restore();
+
+                // // sunrays
+                // ctx.save();
+                // // ctx.shadowColor = 'rgb(255, 245, 48)';
+                // // ctx.shadowBlur =200;
+                // ctx.drawImage(sunRaysSprite, this.raysX, this.raysY, this.raysW, this.raysH)
+                // ctx.restore();
+
+                // sun
+                ctx.save();
+                // ctx.shadowColor = 'rgb(255, 245, 48)';
+                // ctx.shadowBlur =200;
                 ctx.drawImage(sunSprite, this.x, this.y, this.w, this.h)
+                ctx.restore();
+                
             }
             // update() {}
         }
-        const sun = new Sun ();
+        const sun = new Sun (cnvs.width - 175); // 175 is sun.w
 
         class Cloud1 {
-            constructor() {
+            constructor(x, thunder) {
                 this.w = 230;
                 this.h = 174;
-                this.x = 0;
+                this.x = x;
                 this.y = 20;
-                this.rightEdge = this.x + this.w;
-
-                this.thunder = false;
+                this.thunder = thunder;
                 this.lightningW = 90;
                 this.lightningH = 120;
                 this.lightningX_Offset = 75;
                 this.lightningY_Offset = 120;
                 this.lightningX = this.x + this.lightningX_Offset;
                 this.lightningY = this.y + this.lightningY_Offset;
+                this.minFrameDelay = 30;
+                this.maxFrameDelay = 180
+                this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                this.lightningFade = true;
+                this.lightningOpacity = 1;
+                this.frameCounter = 0;
             }
 
             draw (ctx) {
                 if (this.thunder) {
+                    ctx.save();
+                    ctx.globalAlpha = this.lightningOpacity;
                     ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
+                    ctx.restore();
                 }
-
                 ctx.drawImage(cloudSprite, this.x, this.y, this.w, this.h);
             }
+            update() {
+                const resetLightning = () => {
+                    this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                    this.lightningFade = true;
+                    this.lightningOpacity = 1;
+                    this.frameCounter = 0;
+                }
+                // can't let the opacity go to close to 0 because it will reset globalAlpha to 1
+                if (this.lightningFade && this.lightningOpacity > .01) {
+                    this.lightningOpacity -= .005;
+                }
+                if (this.lightningOpacity <= .01) {
+                    this.frameCounter++
+                    if(this.frameCounter > this.lightningDelayPerFrame) resetLightning();
+                }
+            }
         }
-        const cloud1 = new Cloud1()
+        const cloud1 = new Cloud1(0, THUNDER)
 
         class Cloud2 extends Cloud1 {
-            constructor() {
-                super();
-                this.x = 80;
-            }
-            draw (ctx) {
-                if (this.thunder) {
-                    ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
-                }
-
-                ctx.drawImage(cloudSprite, this.x, this.y, this.w, this.h);
+            constructor(x, thunder) {
+                super(x);
+                this.x = x;
+                this.thunder = thunder;
             }
         }
 
-        const cloud2 = new Cloud2
+        const cloud2 = new Cloud2(cnvs.width * 0.10, THUNDER);
 
         class SatelliteCloud1 extends Cloud1 {
-            constructor() {
-                super();
+            constructor(x, thunder) {
+                super(x, thunder);
                 this.y = 20;
-                this.x = sun.x - 70;
-            }
-            draw (ctx) {
-                if (this.thunder) {
-                    ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
-                }
-
-                ctx.drawImage(cloudSprite, this.x, this.y, this.w, this.h);
+                this.x = x;
+                this.thunder = thunder;
             }
         }
 
-        const sat1 = new SatelliteCloud1();
+        const sat1 = new SatelliteCloud1(cnvs.width - 230, THUNDER); // 230 is sat1.w
 
         class Satellite2 extends Cloud1 {
-            constructor() {
-                super();
+            constructor(x, thunder) {
+                super(x, thunder);
                 this.y = 20;
-                this.x = sun.x + 10;
-            }
-            draw (ctx) {
-                if (this.thunder) {
-                    ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
-                }
-
-                ctx.drawImage(cloudSprite, this.x, this.y, this.w, this.h);
+                this.x = x;
+                this.thunder = thunder;
             }
         }
 
-        const sat2 = new Satellite2();
+        const sat2 = new Satellite2((cnvs.width - 230) * .9, THUNDER); // 230 is sat2.w
 
         class Rain1 {
             constructor() {
@@ -539,6 +608,7 @@ const Canvas = () => {
                 this.cX = this.x + this.w * 0.5;
                 this.cY = this.y + this.h * 0.5;
                 this.angle = 0;
+                this.delay = Math.random() * 3000;
             }
             draw(ctx) {
                 ctx.save();
@@ -603,6 +673,7 @@ const Canvas = () => {
                 this.cX = this.x + this.w * 0.5;
                 this.cY = this.y + this.h * 0.5;
                 this.angle = 0;
+                this.delay = Math.random() * 3000;
             }
             draw(ctx) {
                 ctx.save();
@@ -666,6 +737,7 @@ const Canvas = () => {
                 this.cX = this.x + this.w * 0.5;
                 this.cY = this.y + this.h * 0.5;
                 this.angle = 0;
+                this.delay = Math.random() * 3000;
             }
             draw(ctx) {
                 ctx.save();
@@ -728,6 +800,7 @@ const Canvas = () => {
                 this.cX = this.x + this.w * 0.5;
                 this.cY = this.y + this.h * 0.5;
                 this.angle = 0;
+                this.delay = Math.random() * 3000;
             }
             draw(ctx) {
                 ctx.save();
@@ -797,7 +870,31 @@ const Canvas = () => {
             }
         }
 
-        const fogMiddle = new Fog(cnvs.width * .5)
+        const fog = new Fog(cnvs.width * .5)
+
+        class Haze extends Fog {
+            constructor(x) {
+            super();
+            this.x = x;
+            this.transparentHaze = 'rgba(193, 175, 161, .5)'
+            }
+            draw(ctx) {
+                ctx.save();
+                const gradient = ctx.createRadialGradient(this.x, this.y, this.radialR0, this.x, this.y, this.radialR1, 0, Math.PI*2);
+                gradient.addColorStop(0, this.transparentHaze);
+                gradient.addColorStop(1, this.transparentDarkBlue);
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.translate(this.x, this.y);
+                ctx.scale(1, .25)
+                ctx.translate(-this.x, -this.y);
+                ctx.arc(this.x, this.y, this.radialR1, this.startAngle, this.endAngle);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        const haze = new Haze(cnvs.width * 0.5)
 
 
 
@@ -824,7 +921,8 @@ const Canvas = () => {
               ctx.fillStyle = "#00082f";
               ctx.fillRect(0,0,cnvs.width, cnvs.height)
 
-              fogMiddle.draw(ctx);
+            //   haze.draw(ctx);
+            //   fog.draw(ctx);
 
   
               bonsai.draw(ctx);
@@ -839,57 +937,63 @@ const Canvas = () => {
               // weather
               // ctx.drawImage(lightningSprite, 75, 120, 90, 120)
   
-              rainDrops1.forEach(rainDrop => {
-                  rainDrop.draw(ctx)
-                  rainDrop.update()
-              })
-              rainDrops2.forEach(rainDrop => {
-                rainDrop.draw(ctx)
-                rainDrop.update()
-            })
-              sat1RainDrops.forEach(rainDrop => {
-                  rainDrop.draw(ctx);
-                  rainDrop.update();
-              })
-              sat2RainDrops.forEach(rainDrop => {
-                  rainDrop.draw(ctx);
-                  rainDrop.update();
-              })
-              snowFlakes1.forEach(snowFlake => {
-                  snowFlake.draw(ctx)
-                  snowFlake.update()
-              })
-              snowFlakes2.forEach(snowFlake => {
-                snowFlake.draw(ctx)
-                snowFlake.update()
-            })
-              satSnowFlakes1.forEach(snowFlake => {
-                  snowFlake.draw(ctx)
-                  snowFlake.update()
-              })
-              satSnowFlakes2.forEach(snowFlake => {
-                snowFlake.draw(ctx)
-                snowFlake.update()
-            })
+            //   rainDrops1.forEach(rainDrop => {
+            //       rainDrop.draw(ctx)
+            //       rainDrop.update()
+            //   })
+            //   rainDrops2.forEach(rainDrop => {
+            //     rainDrop.draw(ctx)
+            //     rainDrop.update()
+            //   })
+            //   sat1RainDrops.forEach(rainDrop => {
+            //       rainDrop.draw(ctx);
+            //       rainDrop.update();
+            //   })
+            //   sat2RainDrops.forEach(rainDrop => {
+            //       rainDrop.draw(ctx);
+            //       rainDrop.update();
+            //   })
+            //   snowFlakes1.forEach(snowFlake => {
+            //     if (timestamp > snowFlake.delay) {
+            //         snowFlake.draw(ctx)
+            //         snowFlake.update()
+            //     }
+            //   })
+            //   snowFlakes2.forEach(snowFlake => {
+            //     if (timestamp > snowFlake.delay) {
+            //         snowFlake.draw(ctx)
+            //         snowFlake.update()
+            //     }
+            //   })
+            //   satSnowFlakes1.forEach(snowFlake => {
+            //     if (timestamp > snowFlake.delay) {
+            //         snowFlake.draw(ctx)
+            //         snowFlake.update()
+            //     }
+            //   })
+            //   satSnowFlakes2.forEach(snowFlake => {
+            //     if (timestamp > snowFlake.delay) {
+            //         snowFlake.draw(ctx)
+            //         snowFlake.update()
+            //     }
+            //   })
 
+              cloud1.draw(ctx);
+              cloud1.update();
+
+              cloud2.draw(ctx);
+              cloud2.update();
   
-              cloud1.draw(ctx)
-              cloud2.draw(ctx)
-  
-              sun.draw(ctx)
+              sun.draw(ctx);
           
-              sat1.draw(ctx)
-              sat2.draw(ctx)
-  
-              robin.draw(ctx)
-              robin.update();
+              sat1.draw(ctx);
+              sat1.update();
 
-            //   ctx.save()
-            //   ctx.beginPath()
-            //   ctx.ellipse(300, 300, 200, 100, 0, 0, Math.PI * 2)
-            //   ctx.fillStyle = 'aliceBlue'
-            //   ctx.fill();
-            //   ctx.restore()
+              sat2.draw(ctx);
+              sat2.update();
+  
+              robin.draw(ctx);
+              robin.update();
   
             //   greenLeaves.forEach(greenLeaf => {
             //       greenLeaf.draw(ctx);
@@ -897,15 +1001,17 @@ const Canvas = () => {
             //   })
             }
 
+   
+
             requestAnimationFrame(animate)
         }
         animate(0);
 
-    }, [])
+    }, [window.innerWidth])
 
     return (
         <div className="cnvs-wrapper">
-            <canvas id="cnvs" ref={cnvsRef} width="600" height="400" border="red" />
+            <canvas id="cnvs" ref={cnvsRef} width={cnvsWidth} height="400" border="red" />
         </div>
     )
 }

@@ -34,6 +34,8 @@ font-family: 'Zen Kaku Gothic New', sans-serif;
     --general-font-size-hover: 20px;
 
     --zen-kaku: Zen Kaku Gothic New, sans-serif;
+
+    --yellow-bone: rgb(255, 251, 168);
     
 
 
@@ -869,6 +871,11 @@ nav * {
 }
 .cart-total-container * {
     color: var(--aliceBlue);
+}
+.empty-cart-message {
+    color: var(--aliceBlue);
+    padding: 50px 0;
+    font-size: 40px;
 }
 
 .checkout-button-container {
