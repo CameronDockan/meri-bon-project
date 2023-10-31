@@ -5,15 +5,15 @@ import { useEffect, useContext} from 'react';
 import Image from "next/image"
 import Link from 'next/link'
 import { AiOutlineArrowRight } from "react-icons/ai";
-import {CartContext} from '@/components/cart-context';
+import {CartContext} from '@/components/contexts/cart-context';
 
 const ProductDetailsPage = ({params}) => {
     const {id} = params;
     console.log(id)
-    const selectedProdArr = productData.filter(prod => {
-        let prodID = `product${prod.id}`
-        if (id === prodID) return true
-    })
+    // const selectedProdArr = productData.filter(prod => {
+    //     let prodID = `product${prod.id}`
+    //     if (id === prodID) return true
+    // })
 
     const context = useContext(CartContext)
 

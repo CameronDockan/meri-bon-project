@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {CartContext} from '@/components/cart-context'
+import {CartContext} from '@/components/contexts/cart-context'
 import meriBon from '@/public/meri-bon-logo/MERIBON.svg';
 import NavFiller from './nav-filler';
 import { useContext, useState } from 'react';

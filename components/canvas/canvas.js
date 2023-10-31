@@ -12,9 +12,10 @@ const Canvas = () => {
 
     const [cnvsWidth, setWidth] = useState(window.innerWidth)
 
-    const changeCanvasWidth = () => {
-        setWidth(window.innerWidth);
-    }
+        // const changeCanvasWidth = () => {
+        //     setWidth(window.innerWidth);
+        //     window.cancelAnimationFrame(animate);
+        // }
 
         // window.addEventListener('resize', changeCanvasWidth)
 
@@ -24,8 +25,6 @@ const Canvas = () => {
 
 
     useEffect(() => {
-
-        window.addEventListener('resize', changeCanvasWidth)
 
         const cnvs = cnvsRef.current
         const ctx = cnvs.getContext('2d')
@@ -60,9 +59,6 @@ const Canvas = () => {
         //weather
         const sunSprite = new Image()
         sunSprite.src = '/weather/sun.png'
-
-        const sunRaysSprite = new Image()
-        sunRaysSprite.src = '/weather/smallSun1.png'
 
         const cloudSprite = new Image()
         cloudSprite.src = '/weather/cloud.png'
@@ -922,7 +918,7 @@ const Canvas = () => {
               ctx.fillRect(0,0,cnvs.width, cnvs.height)
 
             //   haze.draw(ctx);
-            //   fog.draw(ctx);
+              fog.draw(ctx);
 
   
               bonsai.draw(ctx);
@@ -937,46 +933,46 @@ const Canvas = () => {
               // weather
               // ctx.drawImage(lightningSprite, 75, 120, 90, 120)
   
-            //   rainDrops1.forEach(rainDrop => {
-            //       rainDrop.draw(ctx)
-            //       rainDrop.update()
-            //   })
-            //   rainDrops2.forEach(rainDrop => {
-            //     rainDrop.draw(ctx)
-            //     rainDrop.update()
-            //   })
-            //   sat1RainDrops.forEach(rainDrop => {
-            //       rainDrop.draw(ctx);
-            //       rainDrop.update();
-            //   })
-            //   sat2RainDrops.forEach(rainDrop => {
-            //       rainDrop.draw(ctx);
-            //       rainDrop.update();
-            //   })
-            //   snowFlakes1.forEach(snowFlake => {
-            //     if (timestamp > snowFlake.delay) {
-            //         snowFlake.draw(ctx)
-            //         snowFlake.update()
-            //     }
-            //   })
-            //   snowFlakes2.forEach(snowFlake => {
-            //     if (timestamp > snowFlake.delay) {
-            //         snowFlake.draw(ctx)
-            //         snowFlake.update()
-            //     }
-            //   })
-            //   satSnowFlakes1.forEach(snowFlake => {
-            //     if (timestamp > snowFlake.delay) {
-            //         snowFlake.draw(ctx)
-            //         snowFlake.update()
-            //     }
-            //   })
-            //   satSnowFlakes2.forEach(snowFlake => {
-            //     if (timestamp > snowFlake.delay) {
-            //         snowFlake.draw(ctx)
-            //         snowFlake.update()
-            //     }
-            //   })
+              rainDrops1.forEach(rainDrop => {
+                  rainDrop.draw(ctx)
+                  rainDrop.update()
+              })
+              rainDrops2.forEach(rainDrop => {
+                rainDrop.draw(ctx)
+                rainDrop.update()
+              })
+              sat1RainDrops.forEach(rainDrop => {
+                  rainDrop.draw(ctx);
+                  rainDrop.update();
+              })
+              sat2RainDrops.forEach(rainDrop => {
+                  rainDrop.draw(ctx);
+                  rainDrop.update();
+              })
+              snowFlakes1.forEach(snowFlake => {
+                if (timestamp > snowFlake.delay) {
+                    snowFlake.draw(ctx)
+                    snowFlake.update()
+                }
+              })
+              snowFlakes2.forEach(snowFlake => {
+                if (timestamp > snowFlake.delay) {
+                    snowFlake.draw(ctx)
+                    snowFlake.update()
+                }
+              })
+              satSnowFlakes1.forEach(snowFlake => {
+                if (timestamp > snowFlake.delay) {
+                    snowFlake.draw(ctx)
+                    snowFlake.update()
+                }
+              })
+              satSnowFlakes2.forEach(snowFlake => {
+                if (timestamp > snowFlake.delay) {
+                    snowFlake.draw(ctx)
+                    snowFlake.update()
+                }
+              })
 
               cloud1.draw(ctx);
               cloud1.update();
@@ -1001,11 +997,22 @@ const Canvas = () => {
             //   })
             }
 
-   
-
             requestAnimationFrame(animate)
+
+            // supposed to help with performance
+            return () => {
+                window.removeEventListener('resize', changeCanvasWidth)
+            }
         }
         animate(0);
+
+        // supposed to help with performance
+        const changeCanvasWidth = () => {
+            setWidth(window.innerWidth);
+            window.cancelAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', changeCanvasWidth)
 
     }, [window.innerWidth])
 

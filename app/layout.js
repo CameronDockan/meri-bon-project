@@ -5,29 +5,20 @@
 import '../styles/styles.css'
 import '../styles/mobileNav.css'
 import '../styles/navFiller.css'
-// import {useState, useEffect} from 'react'
-// import CartContext from '@/components/cart-context'
-import CartProvider from '@/components/cart-context'
+import '../styles/locReq.css'
+import '../styles/weatherComponents.css'
+import CartProvider from '@/components/contexts/cart-context'
+import CoordinateProvider from '@/components/contexts/coordinates-context'
 
 export default function RootLayout({ children }) {
-
-  // const [cart, setCart] = useState(() => {
-  //   if (typeof window !== 'undefined') {
-  //   const savedData = localStorage.getItem('theCart');
-  //   const parsedData = JSON.parse(savedData);
-  //   return parsedData || []
-  //   }
-  // })
-
-  // useEffect(()=>{
-  //   localStorage.setItem('theCart', JSON.stringify(cart))
-  // }, [cart])
 
     return (
       <html lang="en">
         <body>
           <CartProvider>
+            <CoordinateProvider>
             {children}
+            </CoordinateProvider>
           </CartProvider>
         </body>
       </html>

@@ -5,21 +5,18 @@ import Nav from '@/components/nav/nav'
 import Canvas from '@/components/canvas/canvas'
 import Main from '@/components/indexPage-main'
 import Footer from '@/components/footer/footer'
-import ClientWeather from '@/components/weather/client-weather'
-import ServerWeather from '@/components/weather/server-weather'
-
+import LocationRequest from '@/components/permissions/locationRequest'
+import WeatherContainer from '@/components/weather/weatherContainer'
 
 const Index = (params, searchParams) => {
 
     return (
         <>
-
+            {/* <LocationRequest /> */}
             <Nav />
             <Canvas />
 
-            {/* <ClientWeather>
-                <ServerWeather />
-            </ClientWeather> */}
+            <WeatherContainer />
             
             <Main />
             <Footer />

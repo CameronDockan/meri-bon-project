@@ -4,7 +4,7 @@ import { useEffect, useContext} from 'react';
 import Image from "next/image"
 import Link from 'next/link'
 import { AiOutlineArrowRight } from "react-icons/ai";
-import {CartContext} from '@/components/cart-context';
+import {CartContext} from '@/components/contexts/cart-context';
 import productData from '@/public/product-data/productData'
 import { bonsais } from '@/app/shop/bonsai/[bonsaiID]/page';
 

@@ -5,7 +5,7 @@ import { useEffect, useContext} from 'react';
 import Image from "next/image"
 import Link from 'next/link'
 import { AiOutlineArrowRight } from "react-icons/ai";
-import {CartContext} from '@/components/cart-context';
+import {CartContext} from '@/components/contexts/cart-context';
 import { tools } from '@/app/shop/tools/[toolID]/page';
 
 const ToolDetailsPage = ({params}) => {

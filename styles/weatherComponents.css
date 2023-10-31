@@ -1,0 +1,60 @@
+.weather-info-wrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.weather-info-container {
+    border-radius: 20px;
+    border: 2px solid var(--aliceBlue);
+    padding: 20px;
+    background-color: var(--mid-blue);
+    /* background-color: var(--dark-green); */
+    box-shadow: inset 0px 0px 20px 0px var(--aliceBlue);
+    margin-top: 50px;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+.weather-info-container * {
+    color: aliceblue;
+}
+
+.weather-info-container:hover {
+    background-color: var(--aliceBlue);
+    box-shadow: inset 0px 0px 20px 0px var(--mid-blue);
+}
+
+.weather-info-container:hover p {
+    color: black;
+}
+
+.weather-info-container:hover .weather-icon-path {
+    fill: black;
+}
+.weather-info-container:hover .weather-icon-circle {
+    fill: black;
+}
+
+
+.weather-info-container > p {
+    padding: 5px;
+}
+
+.weather-info-title {
+    font-size: 30px;
+}
+
+.weather-info-description, .weather-info-temp-title, .weather-info-temp {
+    font-size: 20px;
+}
+
+.weather-info-description {
+    position: relative;
+}
+
+.weather-icon-container {
+    position: absolute;
+    top: -2px;
+    right: 10px;
+}
