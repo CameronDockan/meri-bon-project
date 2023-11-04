@@ -5,20 +5,32 @@
 /**@type {HTMLCanvasElement}*/
 
 import {useEffect, useRef, useState} from 'react'
-import { FaSave, FaThemeisle } from 'react-icons/fa'
+import { useContext } from 'react'
+import { WeatherContext } from '../contexts/weather-context'
 
 const Canvas = () => {
     const cnvsRef = useRef(null)
 
     const [cnvsWidth, setWidth] = useState(window.innerWidth)
 
+    const weatherContext = useContext(WeatherContext)
+
+    let weatherArray = [
+        ['sun', weatherContext.weather[0].sun],
+        ['cloud', weatherContext.weather[0].cloud],
+        ['rain', weatherContext.weather[0].rain],
+        ['thunder', weatherContext.weather[0].thunder],
+        ['fog', weatherContext.weather[0].fog],
+        ['haze', weatherContext.weather[0].haze]
+    ]
+
+    // console.log(weatherArray)
+
         // const changeCanvasWidth = () => {
         //     setWidth(window.innerWidth);
         //     window.cancelAnimationFrame(animate);
         // }
-
         // window.addEventListener('resize', changeCanvasWidth)
-
         // return () => {
         //     window.removeEventListener('resize', changeCanvasWidth)
         // }
@@ -259,12 +271,11 @@ const Canvas = () => {
         const sun = new Sun (cnvs.width - 175); // 175 is sun.w
 
         class Cloud1 {
-            constructor(x, thunder) {
+            constructor(x) {
                 this.w = 230;
                 this.h = 174;
                 this.x = x;
                 this.y = 20;
-                this.thunder = thunder;
                 this.lightningW = 90;
                 this.lightningH = 120;
                 this.lightningX_Offset = 75;
@@ -280,64 +291,42 @@ const Canvas = () => {
             }
 
             draw (ctx) {
-                if (this.thunder) {
-                    ctx.save();
-                    ctx.globalAlpha = this.lightningOpacity;
-                    ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
-                    ctx.restore();
-                }
                 ctx.drawImage(cloudSprite, this.x, this.y, this.w, this.h);
             }
             update() {
-                const resetLightning = () => {
-                    this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
-                    this.lightningFade = true;
-                    this.lightningOpacity = 1;
-                    this.frameCounter = 0;
-                }
-                // can't let the opacity go to close to 0 because it will reset globalAlpha to 1
-                if (this.lightningFade && this.lightningOpacity > .01) {
-                    this.lightningOpacity -= .005;
-                }
-                if (this.lightningOpacity <= .01) {
-                    this.frameCounter++
-                    if(this.frameCounter > this.lightningDelayPerFrame) resetLightning();
-                }
+
             }
         }
-        const cloud1 = new Cloud1(0, THUNDER)
+        const cloud1 = new Cloud1(0)
 
         class Cloud2 extends Cloud1 {
-            constructor(x, thunder) {
+            constructor(x) {
                 super(x);
                 this.x = x;
-                this.thunder = thunder;
             }
         }
 
-        const cloud2 = new Cloud2(cnvs.width * 0.10, THUNDER);
+        const cloud2 = new Cloud2(cnvs.width * 0.10);
 
         class SatelliteCloud1 extends Cloud1 {
-            constructor(x, thunder) {
-                super(x, thunder);
+            constructor(x) {
+                super(x);
                 this.y = 20;
                 this.x = x;
-                this.thunder = thunder;
             }
         }
 
-        const sat1 = new SatelliteCloud1(cnvs.width - 230, THUNDER); // 230 is sat1.w
+        const sat1 = new SatelliteCloud1(cnvs.width - 230); // 230 is sat1.w
 
         class Satellite2 extends Cloud1 {
-            constructor(x, thunder) {
-                super(x, thunder);
+            constructor(x) {
+                super(x);
                 this.y = 20;
                 this.x = x;
-                this.thunder = thunder;
             }
         }
 
-        const sat2 = new Satellite2((cnvs.width - 230) * .9, THUNDER); // 230 is sat2.w
+        const sat2 = new Satellite2((cnvs.width - 230) * .9); // 230 is sat2.w
 
         class Rain1 {
             constructor() {
@@ -605,6 +594,9 @@ const Canvas = () => {
                 this.cY = this.y + this.h * 0.5;
                 this.angle = 0;
                 this.delay = Math.random() * 3000;
+
+
+
             }
             draw(ctx) {
                 ctx.save();
@@ -623,8 +615,6 @@ const Canvas = () => {
                     if (this.y < cnvs.height) {
                         this.wieght += 0.01;
                         this.y += this.weight;
-                        // if (this.headsOrTales === 0) this.x += this.directionX;
-                        // if (this.headsOrTales === 1) this.x -= this.directionX;
                     } else {
                         resetSnow();
                     }
@@ -838,6 +828,166 @@ const Canvas = () => {
             satSnowFlakes2.push(new SatelliteSnow2())
         }
 
+        class Lightning1 {
+            constructor() {
+                this.lightningW = 90;
+                this.lightningH = 120;
+                this.lightningX_Offset = 75;
+                this.lightningY_Offset = 120;
+                this.lightningX = cloud1.x + this.lightningX_Offset;
+                this.lightningY = cloud1.y + this.lightningY_Offset;
+                this.minFrameDelay = 30;
+                this.maxFrameDelay = 180
+                this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                this.lightningFade = true;
+                this.lightningOpacity = 1;
+                this.frameCounter = 0;
+            }
+            draw (ctx) {
+                ctx.save();
+                ctx.globalAlpha = this.lightningOpacity;
+                ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
+                ctx.restore();
+            }
+            update () {
+                const resetLightning = () => {
+                    this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                    this.lightningFade = true;
+                    this.lightningOpacity = 1;
+                    this.frameCounter = 0;
+                }
+                // can't let the opacity go to close to 0 because it will reset globalAlpha to 1
+                if (this.lightningFade && this.lightningOpacity > .01) {
+                    this.lightningOpacity -= .005;
+                }
+                if (this.lightningOpacity <= .01) {
+                    this.frameCounter++
+                    if(this.frameCounter > this.lightningDelayPerFrame) resetLightning();
+                }
+            }
+        }
+        const lightning1 = new Lightning1()
+
+        class Lightning2 {
+            constructor() {
+                this.lightningW = 90;
+                this.lightningH = 120;
+                this.lightningX_Offset = 75;
+                this.lightningY_Offset = 120;
+                this.lightningX = cloud2.x + this.lightningX_Offset;
+                this.lightningY = cloud2.y + this.lightningY_Offset;
+                this.minFrameDelay = 30;
+                this.maxFrameDelay = 180
+                this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                this.lightningFade = true;
+                this.lightningOpacity = 1;
+                this.frameCounter = 0;
+            }
+            draw (ctx) {
+                ctx.save();
+                ctx.globalAlpha = this.lightningOpacity;
+                ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
+                ctx.restore();
+            }
+            update () {
+                const resetLightning = () => {
+                    this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                    this.lightningFade = true;
+                    this.lightningOpacity = 1;
+                    this.frameCounter = 0;
+                }
+                // can't let the opacity go to close to 0 because it will reset globalAlpha to 1
+                if (this.lightningFade && this.lightningOpacity > .01) {
+                    this.lightningOpacity -= .005;
+                }
+                if (this.lightningOpacity <= .01) {
+                    this.frameCounter++
+                    if(this.frameCounter > this.lightningDelayPerFrame) resetLightning();
+                }
+            }
+        }
+        const lightning2 = new Lightning2()
+
+        class SatLightning1 {
+            constructor() {
+                this.lightningW = 90;
+                this.lightningH = 120;
+                this.lightningX_Offset = 75;
+                this.lightningY_Offset = 120;
+                this.lightningX = sat1.x + this.lightningX_Offset;
+                this.lightningY = sat1.y + this.lightningY_Offset;
+                this.minFrameDelay = 30;
+                this.maxFrameDelay = 180
+                this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                this.lightningFade = true;
+                this.lightningOpacity = 1;
+                this.frameCounter = 0;
+            }
+            draw (ctx) {
+                ctx.save();
+                ctx.globalAlpha = this.lightningOpacity;
+                ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
+                ctx.restore();
+            }
+            update () {
+                const resetLightning = () => {
+                    this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                    this.lightningFade = true;
+                    this.lightningOpacity = 1;
+                    this.frameCounter = 0;
+                }
+                // can't let the opacity go to close to 0 because it will reset globalAlpha to 1
+                if (this.lightningFade && this.lightningOpacity > .01) {
+                    this.lightningOpacity -= .005;
+                }
+                if (this.lightningOpacity <= .01) {
+                    this.frameCounter++
+                    if(this.frameCounter > this.lightningDelayPerFrame) resetLightning();
+                }
+            }
+        }
+        const satLightning1 = new SatLightning1()
+
+        class SatLightning2 {
+            constructor() {
+                this.lightningW = 90;
+                this.lightningH = 120;
+                this.lightningX_Offset = 75;
+                this.lightningY_Offset = 120;
+                this.lightningX = sat2.x + this.lightningX_Offset;
+                this.lightningY = sat2.y + this.lightningY_Offset;
+                this.minFrameDelay = 30;
+                this.maxFrameDelay = 180
+                this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                this.lightningFade = true;
+                this.lightningOpacity = 1;
+                this.frameCounter = 0;
+            }
+            draw (ctx) {
+                ctx.save();
+                ctx.globalAlpha = this.lightningOpacity;
+                ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
+                ctx.restore();
+            }
+            update () {
+                const resetLightning = () => {
+                    this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                    this.lightningFade = true;
+                    this.lightningOpacity = 1;
+                    this.frameCounter = 0;
+                }
+                // can't let the opacity go to close to 0 because it will reset globalAlpha to 1
+                if (this.lightningFade && this.lightningOpacity > .01) {
+                    this.lightningOpacity -= .005;
+                }
+                if (this.lightningOpacity <= .01) {
+                    this.frameCounter++
+                    if(this.frameCounter > this.lightningDelayPerFrame) resetLightning();
+                }
+            }
+        }
+        const satLightning2 = new SatLightning2()
+
         class Fog {
             constructor(x) {
                 this.x = x;
@@ -908,101 +1058,121 @@ const Canvas = () => {
 
             // ALL ANIMATION GOES INSIDE THIS CONDITION WHICH IS THROTTLED FPS
             if (deltaTime > interval) {
-              previousTime = currentTime - (deltaTime % interval);
+                previousTime = currentTime - (deltaTime % interval);
 
-              // add your visual updates-related code
-              gameFrame++;
-              ctx.clearRect(0,0,cnvs.width,cnvs.height)
+                // add your visual updates-related code
+                gameFrame++;
+                ctx.clearRect(0,0,cnvs.width,cnvs.height)
 
-              ctx.fillStyle = "#00082f";
-              ctx.fillRect(0,0,cnvs.width, cnvs.height)
-
-            //   haze.draw(ctx);
-              fog.draw(ctx);
-
-  
-              bonsai.draw(ctx);
-              bonsai.update();
-  
-              // TEXT
-              ctx.drawImage(meriText, bonsai.x, bonsai.y + 10, 500, 500)
-              // STICKERS
-              // ctx.drawImage(titleStickerImage, 0, 0, 300, 300)
-              // ctx.drawImage(ctaSticker, cnvs.width-300, 0, 300, 300)
-  
-              // weather
-              // ctx.drawImage(lightningSprite, 75, 120, 90, 120)
-  
-              rainDrops1.forEach(rainDrop => {
-                  rainDrop.draw(ctx)
-                  rainDrop.update()
-              })
-              rainDrops2.forEach(rainDrop => {
-                rainDrop.draw(ctx)
-                rainDrop.update()
-              })
-              sat1RainDrops.forEach(rainDrop => {
-                  rainDrop.draw(ctx);
-                  rainDrop.update();
-              })
-              sat2RainDrops.forEach(rainDrop => {
-                  rainDrop.draw(ctx);
-                  rainDrop.update();
-              })
-              snowFlakes1.forEach(snowFlake => {
-                if (timestamp > snowFlake.delay) {
-                    snowFlake.draw(ctx)
-                    snowFlake.update()
+                ctx.fillStyle = "#00082f";
+                ctx.fillRect(0,0,cnvs.width, cnvs.height)
+                
+                if (weatherContext.weather[0].haze) {
+                    haze.draw(ctx);
                 }
-              })
-              snowFlakes2.forEach(snowFlake => {
-                if (timestamp > snowFlake.delay) {
-                    snowFlake.draw(ctx)
-                    snowFlake.update()
+                if (weatherContext.weather[0].fog) {
+                    fog.draw(ctx);
                 }
-              })
-              satSnowFlakes1.forEach(snowFlake => {
-                if (timestamp > snowFlake.delay) {
-                    snowFlake.draw(ctx)
-                    snowFlake.update()
+
+                bonsai.draw(ctx);
+                bonsai.update();
+
+                // TEXT
+                ctx.drawImage(meriText, bonsai.x, bonsai.y + 10, 500, 500)
+                // STICKERS
+                // ctx.drawImage(titleStickerImage, 0, 0, 300, 300)
+                // ctx.drawImage(ctaSticker, cnvs.width-300, 0, 300, 300)
+
+                if (weatherContext.weather[0].rain) {
+                    rainDrops1.forEach(rainDrop => {
+                        rainDrop.draw(ctx)
+                        rainDrop.update()
+                    })
+                    rainDrops2.forEach(rainDrop => {
+                    rainDrop.draw(ctx)
+                    rainDrop.update()
+                    })
+                    sat1RainDrops.forEach(rainDrop => {
+                        rainDrop.draw(ctx);
+                        rainDrop.update();
+                    })
+                    sat2RainDrops.forEach(rainDrop => {
+                        rainDrop.draw(ctx);
+                        rainDrop.update();
+                    })
                 }
-              })
-              satSnowFlakes2.forEach(snowFlake => {
-                if (timestamp > snowFlake.delay) {
-                    snowFlake.draw(ctx)
-                    snowFlake.update()
+
+
+
+                if (weatherContext.weather[0].snow) {
+                    snowFlakes1.forEach(snowFlake => {
+                        if (gameFrame > snowFlake.delay) {
+                            snowFlake.draw(ctx)
+                            snowFlake.update()
+                        }
+                        })
+                        snowFlakes2.forEach(snowFlake => {
+                        if (gameFrame > snowFlake.delay) {
+                            snowFlake.draw(ctx)
+                            snowFlake.update()
+                        }
+                        })
+                        satSnowFlakes1.forEach(snowFlake => {
+                        if (gameFrame > snowFlake.delay) {
+                            snowFlake.draw(ctx)
+                            snowFlake.update()
+                        }
+                        })
+                        satSnowFlakes2.forEach(snowFlake => {
+                        if (gameFrame > snowFlake.delay) {
+                            snowFlake.draw(ctx)
+                            snowFlake.update()
+                        }
+                        })
                 }
-              })
 
-              cloud1.draw(ctx);
-              cloud1.update();
+                if (weatherContext.weather[0].sun) {
+                    sun.draw(ctx);
+                }
 
-              cloud2.draw(ctx);
-              cloud2.update();
-  
-              sun.draw(ctx);
-          
-              sat1.draw(ctx);
-              sat1.update();
+                if (weatherContext.weather[0].thunder) {
+                    lightning1.draw(ctx)
+                    lightning1.update()
+                    lightning2.draw(ctx)
+                    lightning2.update()
+                    satLightning1.draw(ctx)
+                    satLightning1.update()
+                    satLightning2.draw(ctx)
+                    satLightning2.update()
+                }
 
-              sat2.draw(ctx);
-              sat2.update();
-  
-              robin.draw(ctx);
-              robin.update();
+                if (weatherContext.weather[0].cloud) {
+                    cloud1.draw(ctx);
+                    cloud1.update();
+                    cloud2.draw(ctx);
+                    cloud2.update();
+                    sat1.draw(ctx);
+                    sat1.update();
+                    sat2.draw(ctx);
+                    sat2.update();
+                }
+
+            }
+
+              
+            //   robin.draw(ctx);
+            //   robin.update();
   
             //   greenLeaves.forEach(greenLeaf => {
             //       greenLeaf.draw(ctx);
             //       greenLeaf.update();
             //   })
-            }
+                requestAnimationFrame(animate)
 
-            requestAnimationFrame(animate)
-
-            // supposed to help with performance
-            return () => {
-                window.removeEventListener('resize', changeCanvasWidth)
-            }
+                // supposed to help with performance
+                return () => {
+                    window.removeEventListener('resize', changeCanvasWidth)
+                }
         }
         animate(0);
 
@@ -1014,7 +1184,7 @@ const Canvas = () => {
 
         window.addEventListener('resize', changeCanvasWidth)
 
-    }, [window.innerWidth])
+    }, [window.innerWidth, weatherContext])
 
     return (
         <div className="cnvs-wrapper">

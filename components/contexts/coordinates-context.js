@@ -28,8 +28,8 @@ export default function CoordinateProvider ({ children }) {
     const [retrieved, setRetrieved] = useState(() => {
       if (typeof window !== 'undefined') {
         const savedRetrieval = localStorage.getItem('retrieval');
-        const parsedRretrieval = JSON.parse(savedRetrieval);
-        return parsedRretrieval || false
+        const parsedRetrieval = JSON.parse(savedRetrieval);
+        return parsedRetrieval || false
       }
     })
 

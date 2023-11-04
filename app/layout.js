@@ -9,6 +9,7 @@ import '../styles/locReq.css'
 import '../styles/weatherComponents.css'
 import CartProvider from '@/components/contexts/cart-context'
 import CoordinateProvider from '@/components/contexts/coordinates-context'
+import WeatherProvider from '@/components/contexts/weather-context'
 
 export default function RootLayout({ children }) {
 
@@ -17,7 +18,9 @@ export default function RootLayout({ children }) {
         <body>
           <CartProvider>
             <CoordinateProvider>
-            {children}
+              <WeatherProvider>
+                {children}
+              </WeatherProvider>
             </CoordinateProvider>
           </CartProvider>
         </body>

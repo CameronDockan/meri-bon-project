@@ -7,10 +7,14 @@
 .weather-info-container {
     border-radius: 20px;
     border: 2px solid var(--aliceBlue);
+    border: 2px solid var(--dark-green);
+
     padding: 20px;
     background-color: var(--mid-blue);
     /* background-color: var(--dark-green); */
     box-shadow: inset 0px 0px 20px 0px var(--aliceBlue);
+    box-shadow: inset 0px 0px 20px 0px var(--dark-blue);
+
     margin-top: 50px;
     cursor: pointer;
     transition: all .5s ease;
@@ -20,19 +24,19 @@
     color: aliceblue;
 }
 
-.weather-info-container:hover {
+.weather-info-container.active {
     background-color: var(--aliceBlue);
     box-shadow: inset 0px 0px 20px 0px var(--mid-blue);
 }
 
-.weather-info-container:hover p {
+.weather-info-container.active p {
     color: black;
 }
 
-.weather-info-container:hover .weather-icon-path {
+.weather-info-container.active .weather-icon-path {
     fill: black;
 }
-.weather-info-container:hover .weather-icon-circle {
+.weather-info-container.active .weather-icon-circle {
     fill: black;
 }
 
