@@ -27,26 +27,6 @@ const ProductDetailsPage = ({params}) => {
             : [ ...context.cart, prod ]
         )
     }
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const cartString = localStorage.getItem('theCart')
-            const parsedCart = JSON.parse(cartString)
-            context.setCart(parsedCart)
-        }
-    }, [])
-
-    let cartItemsQuantity = 0;
-    let QuantitySum = 0;
-
-    if (context.cart && context.cart.length > 0) {
-        cartItemsQuantity = context.cart.map(item => item.quantity)
-        QuantitySum = cartItemsQuantity.reduce((a,v) => a + v)
-    } else {
-        cartItemsQuantity = 0; 
-        QuantitySum = 0;
-    }
-
     
     let selectedProduct = productData.filter(product => 'product' + product.id == id)
     let selectedProductElement = selectedProduct.map(prod => {
@@ -98,7 +78,7 @@ const ProductDetailsPage = ({params}) => {
                         <br/>
                         <br/>
                         <p className='product-details-page-prod-brief'>{prod.brief}</p>
-                        <h1>items in cart: {QuantitySum}</h1>
+                        {/* <h1>items in cart: {QuantitySum}</h1> */}
                     </div>
                 </div>
             </div>

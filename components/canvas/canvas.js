@@ -7,6 +7,7 @@
 import {useEffect, useRef, useState} from 'react'
 import { useContext } from 'react'
 import { WeatherContext } from '../contexts/weather-context'
+import WeatherButtonContainer from '../weather/weatherButtonContainer'
 
 const Canvas = () => {
     const cnvsRef = useRef(null)
@@ -15,17 +16,15 @@ const Canvas = () => {
 
     const weatherContext = useContext(WeatherContext)
 
-    let weatherArray = [
-        ['sun', weatherContext.weather[0].sun],
-        ['cloud', weatherContext.weather[0].cloud],
-        ['rain', weatherContext.weather[0].rain],
-        ['thunder', weatherContext.weather[0].thunder],
-        ['fog', weatherContext.weather[0].fog],
-        ['haze', weatherContext.weather[0].haze]
-    ]
-
+    // let weatherArray = [
+    //     ['sun', weatherContext.weather[0].sun],
+    //     ['cloud', weatherContext.weather[0].cloud],
+    //     ['rain', weatherContext.weather[0].rain],
+    //     ['thunder', weatherContext.weather[0].thunder],
+    //     ['fog', weatherContext.weather[0].fog],
+    //     ['haze', weatherContext.weather[0].haze]
+    // ]
     // console.log(weatherArray)
-
         // const changeCanvasWidth = () => {
         //     setWidth(window.innerWidth);
         //     window.cancelAnimationFrame(animate);
@@ -1042,8 +1041,6 @@ const Canvas = () => {
 
         const haze = new Haze(cnvs.width * 0.5)
 
-
-
         let frames_per_second = 60;
         let interval = Math.floor(1000 / frames_per_second); // rounding down since our code will rarely run at the exact interval
         let startTime = performance.now();
@@ -1057,15 +1054,18 @@ const Canvas = () => {
             deltaTime = currentTime - previousTime;
 
             // ALL ANIMATION GOES INSIDE THIS CONDITION WHICH IS THROTTLED FPS
-            if (deltaTime > interval) {
+
+            // if (deltaTime > interval) { THROTTLED FPS WAS CAUSING FLICKERING IN SAFARI
                 previousTime = currentTime - (deltaTime % interval);
 
                 // add your visual updates-related code
                 gameFrame++;
                 ctx.clearRect(0,0,cnvs.width,cnvs.height)
 
+                ctx.save();
                 ctx.fillStyle = "#00082f";
                 ctx.fillRect(0,0,cnvs.width, cnvs.height)
+                ctx.restore();
                 
                 if (weatherContext.weather[0].haze) {
                     haze.draw(ctx);
@@ -1156,10 +1156,8 @@ const Canvas = () => {
                     sat2.draw(ctx);
                     sat2.update();
                 }
+            // } THROTTLED FPS WAS CAUSING FLICKERING IN SAFARI
 
-            }
-
-              
             //   robin.draw(ctx);
             //   robin.update();
   
@@ -1189,6 +1187,7 @@ const Canvas = () => {
     return (
         <div className="cnvs-wrapper">
             <canvas id="cnvs" ref={cnvsRef} width={cnvsWidth} height="400" border="red" />
+            {/* <WeatherButtonContainer /> */}
         </div>
     )
 }

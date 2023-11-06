@@ -14,8 +14,8 @@ const Index = (params, searchParams) => {
         <>
             {/* <LocationRequest /> */}
             <Nav />
+            
             <Canvas />
-
             <WeatherContainer />
             
             <Main />

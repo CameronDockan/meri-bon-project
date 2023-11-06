@@ -5,11 +5,12 @@ import MajorCityWeather from '@/components/weather/majorCityWeather'
 import { useContext, useState, useEffect } from 'react'
 import { CoordinatesContext } from '../contexts/coordinates-context'
 import { WeatherContext } from "../contexts/weather-context"
+import SetAll from './changeWeather/SetAll'
 
 
 const WeatherContainer = () => {
 
-    const [activeIndex, setAI] = useState(0);
+    const [activeIndex, setAI] = useState(4);
 
     const coContext = useContext(CoordinatesContext)
 
@@ -63,6 +64,7 @@ const WeatherContainer = () => {
                 isActive={activeIndex === 4}
                 onClick={() => setAI(4)}
             /> */}
+            {activeIndex === 4 ? <SetAll/> : null}
         </section>
     )
 }

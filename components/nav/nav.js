@@ -5,25 +5,37 @@ import Link from 'next/link';
 import {CartContext} from '@/components/contexts/cart-context'
 import meriBon from '@/public/meri-bon-logo/MERIBON.svg';
 import NavFiller from './nav-filler';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 
 const Nav = () => {
+    
     // cart
     const context = useContext(CartContext)
 
-    // console.log(context)
+    // console.log(context.cart)
 
-        let cartItemsQuantity;
-        let sumOfQuantity;
+    // let cartItemsQuantity;
+    // let sumOfQuantity;
+    
+    // if (context.cart && context.cart.length > 0) {
+    //     cartItemsQuantity = context.cart.map(item => item.quantity)
+    //     sumOfQuantity = cartItemsQuantity.reduce((a,v) => a + v)
+    // } else {
+    //     cartItemsQuantity = 1;
+    //     sumOfQuantity = 1;
+    // }
 
+    const [sumOfQuantity, setSOQ] = useState(0)
+
+    useEffect(() => {
         if (context.cart && context.cart.length > 0) {
-            cartItemsQuantity = context.cart.map(item => item.quantity)
-            sumOfQuantity = cartItemsQuantity.reduce((a,v) => a + v)
+            setSOQ(context.cart.map(item => item.quantity).reduce((a,v) => a + v))
         } else {
-            cartItemsQuantity = 0;
-            sumOfQuantity = 0;
+            setSOQ(0)
         }
+        
+    }, [context.cart])
 
     // burger-btn
     const [menuIsActive, setMIA] = useState(false)

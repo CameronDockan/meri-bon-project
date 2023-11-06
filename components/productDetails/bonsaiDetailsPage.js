@@ -31,25 +31,6 @@ const BonsaiDetailsPage = ({params}) => {
         )
     }
 
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const cartString = localStorage.getItem('theCart')
-            const parsedCart = JSON.parse(cartString)
-            context.setCart(parsedCart)
-        }
-    }, [])
-
-    let cartItemsQuantity = 0;
-    let QuantitySum = 0;
-
-    if (context.cart && context.cart.length > 0) {
-        cartItemsQuantity = context.cart.map(item => item.quantity)
-        QuantitySum = cartItemsQuantity.reduce((a,v) => a + v)
-    } else {
-        cartItemsQuantity = 0; 
-        QuantitySum = 0;
-    }
-
     let selectedProduct = productData.filter(bon => 'bonsai' + bon.bonsaiID == id.bonsaiID)
     let selectedProductElement = selectedProduct.map(prod => {
 
@@ -100,7 +81,7 @@ const BonsaiDetailsPage = ({params}) => {
                         <br/>
                         <br/>
                         <p className='product-details-page-prod-brief'>{prod.brief}</p>
-                        <h1>items in cart: {QuantitySum}</h1>
+                        {/* <h1>items in cart: {QuantitySum}</h1> */}
                     </div>
                 </div>
             </div>

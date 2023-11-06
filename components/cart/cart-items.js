@@ -1,13 +1,12 @@
 'use client'
 
 import Image from "next/image"
-import { useContext, useEffect} from "react"
+import { useContext, useEffect, useState} from "react"
 import {CartContext} from "@/components/contexts/cart-context.js"
 
 const CartItems = () => {
 
     const context = useContext(CartContext)
-
 
     // console.log(context.cart)
 
@@ -23,7 +22,7 @@ const CartItems = () => {
     }
 
     const subtractQuantityFromCart = (cartItem) => {
-        if (cartItem.quantity >= 1) {
+        if (cartItem.quantity >= 2) {
             context.setCart(
                 prevCart => prevCart.some(item => item.id === cartItem.id)
                 ? prevCart.map(item => item.id === cartItem.id 
@@ -44,18 +43,20 @@ const CartItems = () => {
         )
     }
 
+    const [cartIsAvailable, setCIA] = useState(false)
+
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const cartString = localStorage.getItem('theCart')
-            const parsedCart = JSON.parse(cartString)
-            context.setCart(parsedCart)
+        if (context.cart && context.cart.length > 0) {
+            setCIA(true)
+        } else {
+            setCIA(false)
         }
-    }, [])
+    }, [context.cart])
 
 
-    if (context.cart && context.cart.length > 0) {
+    if (cartIsAvailable) {
         const cartElements = context.cart.map(cartItem =>
-            <div key={cartItem.id} className="cart-content-container">
+            <div key={cartItem.id} className="cart-content-container top">
                 <div className="cart-left-content">
                 <Image
                     src={cartItem.imgSrc}
