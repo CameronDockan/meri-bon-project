@@ -33,6 +33,11 @@
     color: black;
 }
 
+.weather-info-container.active div {
+    color: black;
+}
+
+
 .weather-info-container.active .weather-icon-path {
     fill: black;
 }
@@ -42,6 +47,9 @@
 
 
 .weather-info-container > p {
+    padding: 5px;
+}
+.weather-info-container > div {
     padding: 5px;
 }
 
@@ -59,6 +67,6 @@
 
 .weather-icon-container {
     position: absolute;
-    top: -2px;
-    right: 10px;
+    top: -3px;
+    right: 15px;
 }

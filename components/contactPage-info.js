@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import Image from "next/image"
-// import helixTree from "@/public/helix-tree.png"
 import helixTree from "@/public/helix-tree-white.png"
 
 import { useState } from "react"
@@ -13,10 +12,6 @@ const Contact = () => {
         w: 1119 /4,
         h: 1300 /4
     })
-    // let treeW = 1119;
-    // let treeH = 1300;
-
-
 
     return (
         <div className="contact-main-container">
@@ -31,8 +26,11 @@ const Contact = () => {
                     id="left-tree"
                     src={helixTree}
                     alt='verticle dna helix-like branches with leaves'
-                    width={treeSize.w}
-                    height={treeSize.h}
+                    // width={280}
+                    // height={325}
+                    width={Math.floor(treeSize.w)}
+                    height={Math.floor(treeSize.h)}
+                    priority={true}
                  />
                 <div className="contact-info-middle-column">
                     <div className="contact-minor-info-container">
@@ -54,8 +52,11 @@ const Contact = () => {
                     id="right-tree"
                     src={helixTree}
                     alt='verticle dna helix-like branches with leaves'
-                    width={treeSize.w}
-                    height={treeSize.h}
+                    // width={280}
+                    // height={325}
+                    width={Math.floor(treeSize.w)}
+                    height={Math.floor(treeSize.h)}
+                    priority={true}
                  />
             </div>
         </div>

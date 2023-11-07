@@ -41,7 +41,7 @@ const AboutPageInfo = () => {
                 <div className='about-text-container'>
                     <h2>General Info</h2>
                     <p>
-                        This is a mock ecommerce website created using React, NextJS, Canvas API, and vanilla CSS. 
+                        This is a mock ecommerce website with interactive canvas animations that the user can influence by selecting one of the four weather widgets below the canvas on the index page which contain the weather of four major cities from around the world. This project was created using React, NextJS, Canvas API, OpenWeather API, and vanilla CSS. 
                         Unlike SHREDDEPOT (another mock ecommerce website I created) which utilizes Redux Toolkit and Redux-Persist (npm package) in order to persist state,
                         I decided to utilize three native React hooks (useState, useEffect, and createContext) with the help of localStorage to persist the state of the shopping cart.
                     </p>

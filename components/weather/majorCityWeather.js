@@ -21,15 +21,6 @@ const MajorCityWeather = ({lat, lon, generalName, isActive, onClick}) => {
     const [isLoading, setLoading] = useState(true)
     const [weatherID, setWID] = useState(0)
 
-    // const [isRain, setIR] = useState(false)
-    // const [isSun, setISu] = useState(true)
-    // const [isThunder, setIT] = useState(false)
-    // const [isCloud, setIC] = useState(false)
-    // const [isSnow, setISn] = useState(false)
-    // const [isFog, setIF] = useState(false)
-    // const [isHaze, setIH] = useState(false)
-
-
     useEffect(() => {
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=9a6bdb2a44bc588e8cc941bc4d93cf72`)
           .then((res) => res.json())
@@ -59,7 +50,7 @@ const MajorCityWeather = ({lat, lon, generalName, isActive, onClick}) => {
                             generalName
                         }
                     </p>
-                    <p className="weather-info-description">
+                    <div className="weather-info-description">
                         {
                             JSON.stringify(data.weather[0].main).slice(1, -1)
                         }
@@ -86,7 +77,7 @@ const MajorCityWeather = ({lat, lon, generalName, isActive, onClick}) => {
                             {isActive && weatherID >= 801 && weatherID <= 804 ? <SetCloud/> : null}
 
                         </div>
-                    </p>
+                    </div>
 
                     <p className="weather-info-temp-title">Temperature:</p>
                     <p className="weather-info-temp">{`Low: `}{JSON.stringify(data.main.temp_min)} &deg;F</p>

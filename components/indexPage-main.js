@@ -23,6 +23,7 @@ const Main = () => {
                             maxWidth: "100%",
                             height: "auto"
                             }} 
+                        priority={true}
                     />
                 </div>
                 <div className='index-body-element'>
@@ -35,6 +36,7 @@ const Main = () => {
                             maxWidth: "100%",
                             height: "auto"
                             }} 
+                        priority={true}
                     />
                 </div>
                 <div className='index-body-element'>
@@ -47,6 +49,7 @@ const Main = () => {
                             maxWidth: "100%",
                             height: "auto"
                             }} 
+                        priority={true}
                     />
                 </div>
                 <div className='index-body-element'>
@@ -59,6 +62,7 @@ const Main = () => {
                             maxWidth: "100%",
                             height: "auto"
                             }} 
+                        priority={true}
                     />
                 </div>
             </div>
