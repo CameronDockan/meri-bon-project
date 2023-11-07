@@ -15,7 +15,7 @@ const CartTotal = () => {
         } else {
             setCIA(false)
         }
-    })
+    }, [context.cart])
 
     let totalPrice = 0;
     if (cartIsAvailable) {

@@ -7,7 +7,7 @@
 import {useEffect, useRef, useState} from 'react'
 import { useContext } from 'react'
 import { WeatherContext } from '../contexts/weather-context'
-import WeatherButtonContainer from '../weather/weatherButtonContainer'
+// import WeatherButtonContainer from '../weather/weatherButtonContainer'
 
 const Canvas = () => {
     const cnvsRef = useRef(null)
@@ -88,7 +88,6 @@ const Canvas = () => {
         const triColorGradient = 'background-image: linear-gradient(to top, #f0f8ff, #f0f8ff, #f0f8ff, #f0f8ff, #f0f8ff, #d8e2ec, #c0ccd9, #a9b7c7, #78889f, #4c5b78, #243253, #00082f);'
 
         const THUNDER = true;
-
 
         let gameFrame = 0;
         let centerX = cnvs.width*.5;
@@ -1182,7 +1181,7 @@ const Canvas = () => {
 
         window.addEventListener('resize', changeCanvasWidth)
 
-    }, [window.innerWidth, weatherContext])
+    }, [cnvsWidth, weatherContext])
 
     return (
         <div className="cnvs-wrapper">

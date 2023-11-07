@@ -96,7 +96,7 @@ const LocationRequest = () => {
                         </button>
                         <p style={{ color: 'aliceBlue'}}>{isLoading ? 'loading' : coContext.coordinates.latitude}</p>
                         <button className="loc-btn" id="other-loc-btn">
-                            <p>DON'T USE</p>
+                            <p>DON&apos;T USE</p>
                             <p>CURRENT LOCATION</p>
                             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                 width="85" height="85" viewBox="0 0 512.000000 512.000000"

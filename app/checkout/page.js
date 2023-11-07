@@ -35,7 +35,7 @@ const CheckoutPage = () => {
     } else {
         return (
             <div>
-                <h1>You didn't purchase any items</h1>
+                <h1>You did&apos;t purchase any items</h1>
             </div>
         )
     }
