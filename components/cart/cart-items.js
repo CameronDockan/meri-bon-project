@@ -8,6 +8,7 @@ const CartItems = () => {
 
     const context = useContext(CartContext)
     // console.log(context.cart)
+    
 
     const addQuantityToCart = (cartItem) => {
         context.setCart(
