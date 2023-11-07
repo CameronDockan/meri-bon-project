@@ -1,6 +1,6 @@
 // 'use client'
 // THIS IS A SERVER COMPONENT
-// "build": "next build",
+// dear lord please deploy this to vercel
 
 import Nav from '@/components/nav/nav'
 import DynamicCanvas from '@/components/canvas/dynamic-canvas'
