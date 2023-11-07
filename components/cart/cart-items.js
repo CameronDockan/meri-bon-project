@@ -7,7 +7,6 @@ import {CartContext} from "@/components/contexts/cart-context.js"
 const CartItems = () => {
 
     const context = useContext(CartContext)
-
     // console.log(context.cart)
 
     const addQuantityToCart = (cartItem) => {
