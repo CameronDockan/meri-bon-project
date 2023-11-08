@@ -3,13 +3,13 @@
 // dear lord please deploy this to vercel
 
 import Nav from '@/components/nav/nav'
-import DynamicCanvas from '@/components/canvas/dynamic-canvas'
-// import Canvas from '@/components/canvas/canvas'
+// import DynamicCanvas from '@/components/canvas/dynamic-canvas'
+import Canvas from '@/components/canvas/canvas'
 import Main from '@/components/indexPage-main'
 import Footer from '@/components/footer/footer'
 // import LocationRequest from '@/components/permissions/locationRequest'
 import WeatherContainer from '@/components/weather/weatherContainer'
-import DynamicWeatherContainer from '@/components/weather/dynamicWeatherContainer'
+// import DynamicWeatherContainer from '@/components/weather/dynamicWeatherContainer'
 
 const Index = (params, searchParams) => {
 
@@ -17,10 +17,10 @@ const Index = (params, searchParams) => {
         <>
             <Nav />
             
-            <DynamicCanvas/>
-            {/* <Canvas/> */}
-            {/* <WeatherContainer /> */}
-            <DynamicWeatherContainer />
+            {/* <DynamicCanvas/> */}
+            <Canvas/>
+            <WeatherContainer />
+            {/* <DynamicWeatherContainer /> */}
             
             <Main />
             <Footer />
