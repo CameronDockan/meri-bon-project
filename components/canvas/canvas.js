@@ -6,6 +6,7 @@
 
 import {useEffect, useRef, useState} from 'react'
 import { useContext } from 'react'
+import { FaThemeisle } from 'react-icons/fa'
 import { WeatherContext } from '../contexts/weather-context'
 // import WeatherButtonContainer from '../weather/weatherButtonContainer'
 
@@ -16,31 +17,13 @@ const Canvas = () => {
 
     const weatherContext = useContext(WeatherContext)
 
-    // let weatherArray = [
-    //     ['sun', weatherContext.weather[0].sun],
-    //     ['cloud', weatherContext.weather[0].cloud],
-    //     ['rain', weatherContext.weather[0].rain],
-    //     ['thunder', weatherContext.weather[0].thunder],
-    //     ['fog', weatherContext.weather[0].fog],
-    //     ['haze', weatherContext.weather[0].haze]
-    // ]
-    // console.log(weatherArray)
-        // const changeCanvasWidth = () => {
-        //     setWidth(window.innerWidth);
-        //     window.cancelAnimationFrame(animate);
-        // }
-        // window.addEventListener('resize', changeCanvasWidth)
-        // return () => {
-        //     window.removeEventListener('resize', changeCanvasWidth)
-        // }
-
 
     useEffect(() => {
 
         const cnvs = cnvsRef.current
         const ctx = cnvs.getContext('2d')
 
-        cnvs.width = cnvsWidth;
+        // cnvs.width = cnvsWidth;
         cnvs.height = 400;
 
         const bonsaiSprite = new Image()
@@ -286,13 +269,13 @@ const Canvas = () => {
                 this.lightningFade = true;
                 this.lightningOpacity = 1;
                 this.frameCounter = 0;
+                this.scaleEqualizer = 2;
             }
 
             draw (ctx) {
                 ctx.drawImage(cloudSprite, this.x, this.y, this.w, this.h);
             }
             update() {
-
             }
         }
         const cloud1 = new Cloud1(0)
@@ -301,6 +284,12 @@ const Canvas = () => {
             constructor(x) {
                 super(x);
                 this.x = x;
+                this.lightningW = 90;
+                this.lightningH = 120;
+                this.lightningX_Offset = 75;
+                this.lightningY_Offset = 120;
+                this.lightningX = this.x + this.lightningX_Offset;
+                this.lightningY = this.y + this.lightningY_Offset;
             }
         }
 
@@ -316,7 +305,7 @@ const Canvas = () => {
 
         const sat1 = new SatelliteCloud1(cnvs.width - 230); // 230 is sat1.w
 
-        class Satellite2 extends Cloud1 {
+        class SatelliteCloud2 extends Cloud1 {
             constructor(x) {
                 super(x);
                 this.y = 20;
@@ -324,7 +313,72 @@ const Canvas = () => {
             }
         }
 
-        const sat2 = new Satellite2((cnvs.width - 230) * .9); // 230 is sat2.w
+        const sat2 = new SatelliteCloud2((cnvs.width - 230) * .9); // 230 is sat2.w
+
+        class SmallCloud1 {
+            constructor(x) {
+                this.w = 230;
+                this.h = 174;
+                this.x = x;
+                this.y = 20;
+                this.lightningW = 90;
+                this.lightningH = 120;
+                this.lightningX_Offset = 75;
+                this.lightningY_Offset = 120;
+                this.lightningX = this.x + this.lightningX_Offset;
+                this.lightningY = this.y + this.lightningY_Offset;
+                this.minFrameDelay = 30;
+                this.maxFrameDelay = 180
+                this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
+                this.lightningFade = true;
+                this.lightningOpacity = 1;
+                this.frameCounter = 0;
+                this.scaleEqualizer = 2;
+            }
+
+            draw (ctx) {
+                ctx.save();
+                ctx.scale(.5,.5);
+                ctx.drawImage(cloudSprite, this.x * this.scaleEqualizer, this.y, this.w, this.h);
+                ctx.restore();
+            }
+            update() {
+            }
+        }
+        const smallCloud1 = new SmallCloud1(0)
+
+        class SmallCloud2 extends SmallCloud1 {
+            constructor(x) {
+                super(x);
+                this.x = x;    
+                this.lightningW = 90;
+                this.lightningH = 120;
+                this.lightningX_Offset = 75;
+                this.lightningY_Offset = 120;
+                this.lightningX = this.x + this.lightningX_Offset;
+                this.lightningY = this.y + this.lightningY_Offset;            
+            }
+        }
+        const smallCloud2 = new SmallCloud2(cnvsWidth * 0.10);
+
+        class SmallSatelliteCloud1 extends SmallCloud1 {
+            constructor(x) {
+                super(x);
+                this.y = 20;
+                this.x = x;
+            }
+        }
+        const smallSatelliteCloud1 = new SmallSatelliteCloud1(cnvs.width - (230 * 0.5));
+
+        class SmallSatelliteCloud2 extends SmallCloud1 {
+            constructor(x) {
+                super(x);
+                this.y = 20;
+                this.x = x;
+            }
+        }
+        const smallSatelliteCloud2 = new SmallSatelliteCloud2((cnvs.width * .9) - (230 * 0.5)); // 230 is sat2.w
+
 
         class Rain1 {
             constructor() {
@@ -571,6 +625,110 @@ const Canvas = () => {
             sat1RainDrops.push(new SatelliteRain2())
         }
 
+        class SmallRain1 {
+            constructor() {
+                this.rain = true;
+                // random number between two numbers == Math.random() * (max-min) + min);
+                this.leftEdge = smallCloud1.x + 25;
+                this.rightEdge = smallCloud1.x + 100;
+                this.w = 2;
+                this.h = 15;
+                this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
+                this.y = 45;
+                this.rainColor1 = biColorGradient;
+                this.rainColor2 = triColorGradient;
+                this.weight = Math.random()*2;
+                this.directionX = Math.random()*1 - 1
+                this.headsOrTales = Math.floor(Math.random()*2);
+            }
+            draw(ctx) {
+                //rain
+                const drawRain = (ctx) => {
+                    ctx.save();
+                    const gradient = ctx.createLinearGradient(this.x, this.y, this.x, (this.y + this.h));
+                    gradient.addColorStop(0, darkBlue);
+                    gradient.addColorStop(1, aliceBlue);
+                    ctx.strokeStyle = gradient;
+
+                    ctx.lineWidth = this.w;
+                    ctx.beginPath(); // Start a new path
+                    ctx.moveTo(this.x, this.y);
+                    ctx.lineTo(this.x, this.y + this.h);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+                if (this.rain) drawRain(ctx);
+                // const drawRainBox = () => {
+                //     ctx.fillStyle = 'red'
+                //     ctx.fillRect(cloud1.x + 50, cloud1.y, cloud1.w - 100, cloud1.h)
+                // }
+                // drawRainBox();
+            }
+            update () {
+
+                const rainFall = () => {
+                    if (this.y < cnvs.height) {
+                        this.weight += 0.01;
+                        this.y += this.weight;
+                    } else {
+                        // reset
+                        this.weight = Math.random()*2;
+                        this.y = 45;
+                        this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
+                    }
+                }
+                if(this.rain) rainFall();
+            }
+        }
+        const smallRainDrops1 = []
+        const numberOfSmallRainDrops1 = 20
+        for (let i=0; i<numberOfSmallRainDrops1; i++) {
+            smallRainDrops1.push(new SmallRain1())
+        }
+
+        class SmallRain2 extends SmallRain1 {
+            constructor () {
+                super();
+                this.leftEdge = smallCloud2.x + 25;
+                this.rightEdge = smallCloud2.x + 100;
+                this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
+            }
+        }
+        const smallRainDrops2 = []
+        const numberOfSmallRainDrops2 = 20
+        for (let i=0; i<numberOfSmallRainDrops2; i++) {
+            smallRainDrops2.push(new SmallRain2())
+        }
+
+        class SmallSatelliteRain1 extends SmallRain1 {
+            constructor () {
+                super();
+                this.leftEdge = smallSatelliteCloud1.x + 25;
+                this.rightEdge = smallSatelliteCloud1.x + 100;
+                this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
+            }
+        }
+        const smallSatelliteRainDrops1 = []
+        const numberOfSmallSatelliteRainDrops1 = 20
+        for (let i=0; i<numberOfSmallSatelliteRainDrops1; i++) {
+            smallSatelliteRainDrops1.push(new SmallSatelliteRain1())
+        }
+
+        class SmallSatelliteRain2 extends SmallRain1 {
+            constructor () {
+                super();
+                this.leftEdge = smallSatelliteCloud2.x + 25;
+                this.rightEdge = smallSatelliteCloud2.x + 100;
+                this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
+            }
+        }
+        const smallSatelliteRainDrops2 = []
+        const numberOfSmallSatelliteRainDrops2 = 20
+        for (let i=0; i<numberOfSmallSatelliteRainDrops2; i++) {
+            smallSatelliteRainDrops2.push(new SmallSatelliteRain2())
+        }
+
+
         class Snow1 {
             constructor() {
                 this.w = 11;
@@ -578,7 +736,7 @@ const Canvas = () => {
                 this.leftEdge = cloud1.x + 50;
                 this.rightEdge = cloud1.x + cloud1.w - 50;
                 this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
-                this.y = cloud1.y + (cloud1.h * 0.5);
+                this.y = cloud1.y + (cloud1.h * 0.6);
                 this.minWeight = 1;
                 this.maxWeight = 2;
                 this.weight = Math.random() * (this.maxWeight - this.minWeight) + this.minWeight;
@@ -591,7 +749,7 @@ const Canvas = () => {
                 this.cX = this.x + this.w * 0.5;
                 this.cY = this.y + this.h * 0.5;
                 this.angle = 0;
-                this.delay = Math.random() * 3000;
+                this.delay = Math.random() * 300;
 
 
 
@@ -606,7 +764,7 @@ const Canvas = () => {
             }
             update() {
                 const resetSnow = () => {
-                        this.y = cloud1.y + (cloud1.h * 0.4);
+                        this.y = cloud1.y + (cloud1.h * 0.6);
                         this.weight = Math.random() * (this.maxWeight - this.minWeight) + this.minWeight;
                 }
                 const snowFall = () => {
@@ -637,14 +795,63 @@ const Canvas = () => {
             snowFlakes1.push(new Snow1())
         }
 
-        class Snow2 {
-            constructor() {
-                this.w = 11;
-                this.h = 11;
+        class Snow2 extends Snow1 {
+            constructor () {
+                super();
                 this.leftEdge = cloud2.x + 50;
                 this.rightEdge = cloud2.x + cloud2.w - 50;
                 this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
-                this.y = cloud2.y + (cloud2.h * 0.5);
+                this.cX = this.x + this.w * 0.5;
+                this.cY = this.y + this.h * 0.5;
+            }
+        }
+
+        let snowFlakes2 = [];
+        for(let i=0; i<numberOfSnowFlakes; i++) {
+            snowFlakes2.push(new Snow2())
+        }
+
+        class SatelliteSnow1 extends Snow1 {
+            constructor () {
+                super();
+                this.leftEdge = sat1.x + 50;
+                this.rightEdge = sat1.x + sat1.w - 50;
+                this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
+                this.cX = this.x + this.w * 0.5;
+                this.cY = this.y + this.h * 0.5;
+            }
+        }
+
+        let satSnowFlakes1 = [];
+        for(let i=0; i<numberOfSnowFlakes; i++) {
+            satSnowFlakes1.push(new SatelliteSnow1())
+        }
+
+        class SatelliteSnow2 extends Snow1 {
+            constructor () {
+                super();
+                this.leftEdge = sat2.x + 50;
+                this.rightEdge = sat2.x + sat2.w - 50;
+                this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
+                this.cX = this.x + this.w * 0.5;
+                this.cY = this.y + this.h * 0.5;
+            }
+
+        }
+
+        let satSnowFlakes2 = [];
+        for(let i=0; i<numberOfSnowFlakes; i++) {
+            satSnowFlakes2.push(new SatelliteSnow2())
+        }
+
+        class SmallSnow1 {
+            constructor() {
+                this.w = 11;
+                this.h = 11;
+                this.leftEdge = smallCloud1.x + 20;
+                this.rightEdge = smallCloud1.x + 86;
+                this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
+                this.y = 48;
                 this.minWeight = 1;
                 this.maxWeight = 2;
                 this.weight = Math.random() * (this.maxWeight - this.minWeight) + this.minWeight;
@@ -657,7 +864,7 @@ const Canvas = () => {
                 this.cX = this.x + this.w * 0.5;
                 this.cY = this.y + this.h * 0.5;
                 this.angle = 0;
-                this.delay = Math.random() * 3000;
+                this.delay = Math.random() * 300;
             }
             draw(ctx) {
                 ctx.save();
@@ -669,21 +876,18 @@ const Canvas = () => {
             }
             update() {
                 const resetSnow = () => {
-                        this.y = cloud2.y + (cloud2.h * 0.4);
-                        this.weight = Math.random() * (this.maxWeight - this.minWeight) + this.minWeight;
+                    this.y = 45;
+                    this.weight = Math.random() * (this.maxWeight - this.minWeight) + this.minWeight;
                 }
                 const snowFall = () => {
                     if (this.y < cnvs.height) {
                         this.wieght += 0.01;
                         this.y += this.weight;
-                        // if (this.headsOrTales === 0) this.x += this.directionX;
-                        // if (this.headsOrTales === 1) this.x -= this.directionX;
                     } else {
                         resetSnow();
                     }
                 }
                 snowFall();
-
                 const snowRevolutions = () => {
                     //spin off y axis based on x values
                     if (this.scale >= 1) this.scaleDirection = -1;
@@ -696,144 +900,71 @@ const Canvas = () => {
             }
         }
 
-        let snowFlakes2 = [];
-        for(let i=0; i<numberOfSnowFlakes; i++) {
-            snowFlakes2.push(new Snow2())
+        let smallSnowFlakes1 = [];
+        let numberOfSmallSnowFlakes1 = 20;
+        for(let i=0; i<numberOfSmallSnowFlakes1; i++) {
+            smallSnowFlakes1.push(new SmallSnow1())
         }
 
-        class SatelliteSnow1 {
-            constructor() {
-                this.w = 11;
-                this.h = 11;
-                this.leftEdge = sat1.x + 50;
-                this.rightEdge = sat1.x + sat1.w - 50;
+        class SmallSnow2 extends SmallSnow1 {
+            constructor () {
+                super();
+                this.leftEdge = smallCloud2.x + 20;
+                this.rightEdge = smallCloud2.x + 86;
                 this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
-                this.y = sat1.y + (sat1.h * 0.5);
-                this.minWeight = 1;
-                this.maxWeight = 2;
-                this.weight = Math.random() * (this.maxWeight - this.minWeight) + this.minWeight;
-                this.directionX = Math.random() * 1 - 1;
-                this.headsOrTales = Math.floor(Math.random()*2);
-                this.scaleMin = -1;
-                this.scaleMax = 1;
-                this.scale = Math.random() * (this.scaleMax - this.scaleMin) + this.scaleMin;
-                this.scaleDirection = -1;
                 this.cX = this.x + this.w * 0.5;
                 this.cY = this.y + this.h * 0.5;
-                this.angle = 0;
-                this.delay = Math.random() * 3000;
-            }
-            draw(ctx) {
-                ctx.save();
-                ctx.translate(this.cX, this.cY);
-                ctx.scale(this.scale, 1);
-                ctx.translate(-this.cX, -this.cY);
-                ctx.drawImage(snowFlakeSprite, this.x, this.y, this.w, this.h);
-                ctx.restore();
-            }
-            update() {
-                const resetSnow = () => {
-                        this.y = sat1.y + (sat1.h * 0.4);
-                        this.weight = Math.random() * (this.maxWeight - this.minWeight) + this.minWeight;
-                }
-                const snowFall = () => {
-                    if (this.y < cnvs.height) {
-                        this.wieght += 0.01;
-                        this.y += this.weight;
-                        // if (this.headsOrTales === 0) this.x += this.directionX;
-                        // if (this.headsOrTales === 1) this.x -= this.directionX;
-                    } else {
-                        resetSnow();
-                    }
-                }
-                snowFall();
-
-                const snowRevolutions = () => {
-                    //spin off y axis based on x values
-                    if (this.scale >= 1) this.scaleDirection = -1;
-                    if (this.scale <= -1) this.scaleDirection = 1;
-                    if (this.scaleDirection === -1) this.scale -= .02;
-                    if (this.scaleDirection === 1) this.scale += .02;
-
-                }
-                snowRevolutions();
             }
         }
-        let satSnowFlakes1 = [];
-        for(let i=0; i<numberOfSnowFlakes; i++) {
-            satSnowFlakes1.push(new SatelliteSnow1())
+
+        let smallSnowFlakes2 = [];
+        let numberOfSmallSnowFlakes2 = 20;
+        for(let i=0; i<numberOfSmallSnowFlakes2; i++) {
+            smallSnowFlakes2.push(new SmallSnow2())
         }
 
-        class SatelliteSnow2 {
-            constructor() {
-                this.w = 11;
-                this.h = 11;
-                this.leftEdge = sat2.x + 50;
-                this.rightEdge = sat2.x + sat2.w - 50;
+        class SmallSatelliteSnow1 extends SmallSnow1 {
+            constructor () {
+                super();
+                this.leftEdge = smallSatelliteCloud1.x + 20;
+                this.rightEdge = smallSatelliteCloud1.x + 86;
                 this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
-                this.y = sat2.y + (sat2.h * 0.5);
-                this.minWeight = 1;
-                this.maxWeight = 2;
-                this.weight = Math.random() * (this.maxWeight - this.minWeight) + this.minWeight;
-                this.directionX = Math.random() * 1 - 1;
-                this.headsOrTales = Math.floor(Math.random()*2);
-                this.scaleMin = -1;
-                this.scaleMax = 1;
-                this.scale = Math.random() * (this.scaleMax - this.scaleMin) + this.scaleMin;
-                this.scaleDirection = -1;
                 this.cX = this.x + this.w * 0.5;
                 this.cY = this.y + this.h * 0.5;
-                this.angle = 0;
-                this.delay = Math.random() * 3000;
-            }
-            draw(ctx) {
-                ctx.save();
-                ctx.translate(this.cX, this.cY);
-                ctx.scale(this.scale, 1);
-                ctx.translate(-this.cX, -this.cY);
-                ctx.drawImage(snowFlakeSprite, this.x, this.y, this.w, this.h);
-                ctx.restore();
-            }
-            update() {
-                const resetSnow = () => {
-                        this.y = sat2.y + (sat2.h * 0.4);
-                        this.weight = Math.random() * (this.maxWeight - this.minWeight) + this.minWeight;
-                }
-                const snowFall = () => {
-                    if (this.y < cnvs.height) {
-                        this.wieght += 0.01;
-                        this.y += this.weight;
-                        // if (this.headsOrTales === 0) this.x += this.directionX;
-                        // if (this.headsOrTales === 1) this.x -= this.directionX;
-                    } else {
-                        resetSnow();
-                    }
-                }
-                snowFall();
-                const snowRevolutions = () => {
-                    //spin off y axis based on x values
-                    if (this.scale >= 1) this.scaleDirection = -1;
-                    if (this.scale <= -1) this.scaleDirection = 1;
-                    if (this.scaleDirection === -1) this.scale -= .02;
-                    if (this.scaleDirection === 1) this.scale += .02;
-
-                }
-                snowRevolutions();
             }
         }
-        let satSnowFlakes2 = [];
-        for(let i=0; i<numberOfSnowFlakes; i++) {
-            satSnowFlakes2.push(new SatelliteSnow2())
+
+        let smallSatelliteSnowFlakes1 = [];
+        let numberOfSmallSatelliteSnowFlakes1 = 20;
+        for(let i=0; i<numberOfSmallSatelliteSnowFlakes1; i++) {
+            smallSatelliteSnowFlakes1.push(new SmallSatelliteSnow1())
+        }
+
+        class SmallSatelliteSnow2 extends SmallSnow1 {
+            constructor () {
+                super();
+                this.leftEdge = smallSatelliteCloud2.x + 20;
+                this.rightEdge = smallSatelliteCloud2.x + 86;
+                this.x = Math.random() * (this.rightEdge - this.leftEdge) + this.leftEdge;
+                this.cX = this.x + this.w * 0.5;
+                this.cY = this.y + this.h * 0.5;
+            }
+        }
+
+        let smallSatelliteSnowFlakes2 = [];
+        let numberOfSmallSatelliteSnowFlakes2 = 20;
+        for(let i=0; i<numberOfSmallSatelliteSnowFlakes2; i++) {
+            smallSatelliteSnowFlakes2.push(new SmallSatelliteSnow2())
         }
 
         class Lightning1 {
             constructor() {
-                this.lightningW = 90;
-                this.lightningH = 120;
-                this.lightningX_Offset = 75;
-                this.lightningY_Offset = 120;
-                this.lightningX = cloud1.x + this.lightningX_Offset;
-                this.lightningY = cloud1.y + this.lightningY_Offset;
+                this.w = 90;
+                this.h = 120;
+                this.xOffset = 75;
+                this.yOffset = 120;
+                this.x = cloud1.x + this.xOffset;
+                this.y = cloud1.y + this.yOffset;
                 this.minFrameDelay = 30;
                 this.maxFrameDelay = 180
                 this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
@@ -844,7 +975,7 @@ const Canvas = () => {
             draw (ctx) {
                 ctx.save();
                 ctx.globalAlpha = this.lightningOpacity;
-                ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
+                ctx.drawImage(lightningSprite, this.x, this.y, this.w, this.h);
                 ctx.restore();
             }
             update () {
@@ -866,125 +997,86 @@ const Canvas = () => {
         }
         const lightning1 = new Lightning1()
 
-        class Lightning2 {
-            constructor() {
-                this.lightningW = 90;
-                this.lightningH = 120;
-                this.lightningX_Offset = 75;
-                this.lightningY_Offset = 120;
-                this.lightningX = cloud2.x + this.lightningX_Offset;
-                this.lightningY = cloud2.y + this.lightningY_Offset;
-                this.minFrameDelay = 30;
-                this.maxFrameDelay = 180
-                this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
-                this.lightningFade = true;
-                this.lightningOpacity = 1;
-                this.frameCounter = 0;
-            }
-            draw (ctx) {
-                ctx.save();
-                ctx.globalAlpha = this.lightningOpacity;
-                ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
-                ctx.restore();
-            }
-            update () {
-                const resetLightning = () => {
-                    this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
-                    this.lightningFade = true;
-                    this.lightningOpacity = 1;
-                    this.frameCounter = 0;
-                }
-                // can't let the opacity go to close to 0 because it will reset globalAlpha to 1
-                if (this.lightningFade && this.lightningOpacity > .01) {
-                    this.lightningOpacity -= .005;
-                }
-                if (this.lightningOpacity <= .01) {
-                    this.frameCounter++
-                    if(this.frameCounter > this.lightningDelayPerFrame) resetLightning();
-                }
+        class Lightning2 extends Lightning1 {
+            constructor () {
+                super();
+                this.xOffset = 75;
+                this.yOffset = 120;
+                this.x = cloud2.x + this.xOffset;
+                this.y = cloud2.y + this.yOffset;
             }
         }
         const lightning2 = new Lightning2()
 
-        class SatLightning1 {
-            constructor() {
-                this.lightningW = 90;
-                this.lightningH = 120;
-                this.lightningX_Offset = 75;
-                this.lightningY_Offset = 120;
-                this.lightningX = sat1.x + this.lightningX_Offset;
-                this.lightningY = sat1.y + this.lightningY_Offset;
-                this.minFrameDelay = 30;
-                this.maxFrameDelay = 180
-                this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
-                this.lightningFade = true;
-                this.lightningOpacity = 1;
-                this.frameCounter = 0;
-            }
-            draw (ctx) {
-                ctx.save();
-                ctx.globalAlpha = this.lightningOpacity;
-                ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
-                ctx.restore();
-            }
-            update () {
-                const resetLightning = () => {
-                    this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
-                    this.lightningFade = true;
-                    this.lightningOpacity = 1;
-                    this.frameCounter = 0;
-                }
-                // can't let the opacity go to close to 0 because it will reset globalAlpha to 1
-                if (this.lightningFade && this.lightningOpacity > .01) {
-                    this.lightningOpacity -= .005;
-                }
-                if (this.lightningOpacity <= .01) {
-                    this.frameCounter++
-                    if(this.frameCounter > this.lightningDelayPerFrame) resetLightning();
-                }
+        class SatLightning1 extends Lightning1 {
+            constructor () {
+                super();
+                this.xOffset = 75;
+                this.yOffset = 120;
+                this.x = sat1.x + this.xOffset;
+                this.y = sat1.y + this.yOffset;
             }
         }
         const satLightning1 = new SatLightning1()
 
-        class SatLightning2 {
-            constructor() {
-                this.lightningW = 90;
-                this.lightningH = 120;
-                this.lightningX_Offset = 75;
-                this.lightningY_Offset = 120;
-                this.lightningX = sat2.x + this.lightningX_Offset;
-                this.lightningY = sat2.y + this.lightningY_Offset;
-                this.minFrameDelay = 30;
-                this.maxFrameDelay = 180
-                this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
-                this.lightningFade = true;
-                this.lightningOpacity = 1;
-                this.frameCounter = 0;
-            }
-            draw (ctx) {
-                ctx.save();
-                ctx.globalAlpha = this.lightningOpacity;
-                ctx.drawImage(lightningSprite, this.lightningX, this.lightningY, this.lightningW, this.lightningH);
-                ctx.restore();
-            }
-            update () {
-                const resetLightning = () => {
-                    this.lightningDelayPerFrame = Math.floor(Math.random()*(this.maxFrameDelay - this.minFrameDelay + 1) + this.minFrameDelay); // 60fps * 3sec = 180
-                    this.lightningFade = true;
-                    this.lightningOpacity = 1;
-                    this.frameCounter = 0;
-                }
-                // can't let the opacity go to close to 0 because it will reset globalAlpha to 1
-                if (this.lightningFade && this.lightningOpacity > .01) {
-                    this.lightningOpacity -= .005;
-                }
-                if (this.lightningOpacity <= .01) {
-                    this.frameCounter++
-                    if(this.frameCounter > this.lightningDelayPerFrame) resetLightning();
-                }
+        class SatLightning2 extends Lightning1 {
+            constructor () {
+                super();
+                this.xOffset = 75;
+                this.yOffset = 120;
+                this.x = sat2.x + this.xOffset;
+                this.y = sat2.y + this.yOffset;
             }
         }
         const satLightning2 = new SatLightning2()
+
+        class SmallLightning1 extends Lightning1 {
+            constructor () {
+                super();
+                this.scaleEqualizer = 2;
+                this.xOffset = 75 / this.scaleEqualizer;
+                this.yOffset = 120;
+                this.x = cloud1.x + this.xOffset;
+                this.y = cloud1.y + this.yOffset;
+            }
+            draw (ctx) {
+                ctx.save();
+                ctx.scale(.5,.5);
+                ctx.globalAlpha = this.lightningOpacity;
+                ctx.drawImage(lightningSprite, this.x * this.scaleEqualizer, this.y, this.w, this.h);
+                ctx.restore();
+            }
+        }
+        const smallLightning1 = new SmallLightning1();
+
+
+        class SmallLightning2 extends SmallLightning1 {
+            constructor () {
+                super();
+                this.x = smallCloud2.x + this.xOffset;
+                this.y = smallCloud2.y + this.yOffset;
+            }
+        }
+        const smallLightning2 = new SmallLightning2();
+
+        class SmallSatelliteLightning1 extends SmallLightning1 {
+            constructor () {
+                super();
+                this.x = smallSatelliteCloud1.x + this.xOffset;
+                this.y = smallSatelliteCloud1.y + this.yOffset;
+            }
+        }
+        const smallSatelliteLightning1 = new SmallSatelliteLightning1();
+
+        class SmallSatelliteLightning2 extends SmallLightning2 {
+            constructor () {
+                super();
+                this.x = smallSatelliteCloud2.x + this.xOffset;
+                this.y = smallSatelliteCloud2.y + this.yOffset;
+            }
+        }
+        const smallSatelliteLightning2 = new SmallSatelliteLightning2();
+
 
         class Fog {
             constructor(x) {
@@ -1073,6 +1165,11 @@ const Canvas = () => {
                     fog.draw(ctx);
                 }
 
+
+                if (weatherContext.weather[0].sun) {
+                    sun.draw(ctx);
+                }
+
                 bonsai.draw(ctx);
                 bonsai.update();
 
@@ -1082,78 +1179,143 @@ const Canvas = () => {
                 // ctx.drawImage(titleStickerImage, 0, 0, 300, 300)
                 // ctx.drawImage(ctaSticker, cnvs.width-300, 0, 300, 300)
 
-                if (weatherContext.weather[0].rain) {
-                    rainDrops1.forEach(rainDrop => {
-                        rainDrop.draw(ctx)
-                        rainDrop.update()
-                    })
-                    rainDrops2.forEach(rainDrop => {
-                    rainDrop.draw(ctx)
-                    rainDrop.update()
-                    })
-                    sat1RainDrops.forEach(rainDrop => {
-                        rainDrop.draw(ctx);
-                        rainDrop.update();
-                    })
-                    sat2RainDrops.forEach(rainDrop => {
-                        rainDrop.draw(ctx);
-                        rainDrop.update();
-                    })
-                }
-
-
+                // if (weatherContext.weather[0].rain) {
+                //     if (cnvsWidth > 630) {
+                //         rainDrops1.forEach(rainDrop => {
+                //             rainDrop.draw(ctx)
+                //             rainDrop.update()
+                //         })
+                //         rainDrops2.forEach(rainDrop => {
+                //         rainDrop.draw(ctx)
+                //         rainDrop.update()
+                //         })
+                //         sat1RainDrops.forEach(rainDrop => {
+                //             rainDrop.draw(ctx);
+                //             rainDrop.update();
+                //         })
+                //         sat2RainDrops.forEach(rainDrop => {
+                //             rainDrop.draw(ctx);
+                //             rainDrop.update();
+                //         })
+                //     } else {
+                //         smallRainDrops1.forEach(rainDrop => {
+                //             rainDrop.draw(ctx);
+                //             rainDrop.update();
+                //         })
+                //         smallRainDrops2.forEach(rainDrop => {
+                //             rainDrop.draw(ctx);
+                //             rainDrop.update();
+                //         })
+                //         smallSatelliteRainDrops1.forEach(rainDrop => {
+                //             rainDrop.draw(ctx);
+                //             rainDrop.update();
+                //         })
+                //         smallSatelliteRainDrops2.forEach(rainDrop => {
+                //             rainDrop.draw(ctx);
+                //             rainDrop.update();
+                //         })
+                //     }
+                // }
 
                 if (weatherContext.weather[0].snow) {
-                    snowFlakes1.forEach(snowFlake => {
-                        if (gameFrame > snowFlake.delay) {
-                            snowFlake.draw(ctx)
-                            snowFlake.update()
-                        }
-                        })
+                    if (cnvsWidth > 630) {
+                        snowFlakes1.forEach(snowFlake => {
+                            if (gameFrame > snowFlake.delay) {
+                                snowFlake.draw(ctx)
+                                snowFlake.update()
+                            }
+                            })
                         snowFlakes2.forEach(snowFlake => {
-                        if (gameFrame > snowFlake.delay) {
-                            snowFlake.draw(ctx)
-                            snowFlake.update()
-                        }
-                        })
+                            if (gameFrame > snowFlake.delay) {
+                                snowFlake.draw(ctx)
+                                snowFlake.update()
+                            }
+                            })
                         satSnowFlakes1.forEach(snowFlake => {
-                        if (gameFrame > snowFlake.delay) {
-                            snowFlake.draw(ctx)
-                            snowFlake.update()
-                        }
-                        })
+                            if (gameFrame > snowFlake.delay) {
+                                snowFlake.draw(ctx)
+                                snowFlake.update()
+                            }
+                            })
                         satSnowFlakes2.forEach(snowFlake => {
-                        if (gameFrame > snowFlake.delay) {
-                            snowFlake.draw(ctx)
-                            snowFlake.update()
-                        }
-                        })
-                }
-
-                if (weatherContext.weather[0].sun) {
-                    sun.draw(ctx);
+                            if (gameFrame > snowFlake.delay) {
+                                snowFlake.draw(ctx)
+                                snowFlake.update()
+                            }
+                            })
+                    } else {
+                        smallSnowFlakes1.forEach(snowFlake => {
+                            if (gameFrame > snowFlake.delay) {
+                                snowFlake.draw(ctx)
+                                snowFlake.update()
+                            }
+                            })
+                            smallSnowFlakes2.forEach(snowFlake => {
+                                if (gameFrame > snowFlake.delay) {
+                                    snowFlake.draw(ctx)
+                                    snowFlake.update()
+                                }
+                                })
+                            smallSatelliteSnowFlakes1.forEach(snowFlake => {
+                                if (gameFrame > snowFlake.delay) {
+                                    snowFlake.draw(ctx)
+                                    snowFlake.update()
+                                }
+                                })
+                            smallSatelliteSnowFlakes2.forEach(snowFlake => {
+                                if (gameFrame > snowFlake.delay) {
+                                    snowFlake.draw(ctx)
+                                    snowFlake.update()
+                                }
+                                })
+                    }
                 }
 
                 if (weatherContext.weather[0].thunder) {
-                    lightning1.draw(ctx)
-                    lightning1.update()
-                    lightning2.draw(ctx)
-                    lightning2.update()
-                    satLightning1.draw(ctx)
-                    satLightning1.update()
-                    satLightning2.draw(ctx)
-                    satLightning2.update()
+                    if (cnvsWidth > 630) {
+                        lightning1.draw(ctx)
+                        lightning1.update()
+                        lightning2.draw(ctx)
+                        lightning2.update()
+                        satLightning1.draw(ctx)
+                        satLightning1.update()
+                        satLightning2.draw(ctx)
+                        satLightning2.update()
+                    } else {
+                        smallLightning1.draw(ctx);
+                        smallLightning1.update();
+                        smallLightning2.draw(ctx);
+                        smallLightning2.update();
+                        smallSatelliteLightning1.draw(ctx);
+                        smallSatelliteLightning1.update();
+                        smallSatelliteLightning2.draw(ctx);
+                        smallSatelliteLightning2.update();
+                    }
+
                 }
 
                 if (weatherContext.weather[0].cloud) {
-                    cloud1.draw(ctx);
-                    cloud1.update();
-                    cloud2.draw(ctx);
-                    cloud2.update();
-                    sat1.draw(ctx);
-                    sat1.update();
-                    sat2.draw(ctx);
-                    sat2.update();
+                    if (cnvsWidth > 630) {
+                        cloud1.draw(ctx);
+                        cloud1.update();
+                        cloud2.draw(ctx);
+                        cloud2.update();
+                        sat1.draw(ctx);
+                        sat1.update();
+                        sat2.draw(ctx);
+                        sat2.update();
+                    } else {
+                        smallCloud1.draw(ctx);
+                        smallCloud1.update();
+                        smallCloud2.draw(ctx);
+                        smallCloud2.update();
+                        smallSatelliteCloud1.draw(ctx);
+                        smallSatelliteCloud1.update();
+                        smallSatelliteCloud2.draw(ctx);
+                        smallSatelliteCloud2.update();
+
+                    }
+
                 }
             // } THROTTLED FPS WAS CAUSING FLICKERING IN SAFARI
 
