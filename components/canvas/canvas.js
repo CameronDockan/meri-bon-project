@@ -9,6 +9,7 @@ import { useContext } from 'react'
 import { FaThemeisle } from 'react-icons/fa'
 import { WeatherContext } from '../contexts/weather-context'
 // import WeatherButtonContainer from '../weather/weatherButtonContainer'
+// ran npm build post smallAnimations update
 
 const Canvas = () => {
     const cnvsRef = useRef(null)
