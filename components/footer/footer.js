@@ -1,20 +1,28 @@
+'use client'
+
 import {FaTwitter, FaInstagram, FaTiktok, FaTumblr, FaRegCopyright} from 'react-icons/fa'
 import Link from 'next/link'
 
 const Footer = () => {
+
+
+    const handleClick = () => {
+        alert('not a real link')
+    }
+
     return (
         <div className="footer-container">
             <ul>
-                <li>CONTACT</li>
-                <li>ABOUT</li>
-                <li>SHOP</li>
-                <li>CART</li>
+                <li><Link className='footer-link' href={'/contact/'}>CONTACT</Link></li>
+                <li><Link className='footer-link' href={'/about/'}>ABOUT</Link></li>
+                <li><Link className='footer-link' href={'/shop/all/'}>SHOP</Link></li>
+                <li><Link className='footer-link' href={'/cart/'}>CART</Link></li>
             </ul>
             <div className="socials-container">
-                <Link href={'/'}><FaTwitter className='social-icons' /></Link>
-                <Link href={'/'}><FaInstagram className='social-icons' /></Link>
-                <Link href={'/'}><FaTiktok className='social-icons' /></Link>
-                <Link href={'/'}><FaTumblr className='social-icons' /></Link>
+                <Link href={'/'} onClick={handleClick}><FaTwitter className='social-icons' /></Link>
+                <Link href={'/'} onClick={handleClick}><FaInstagram className='social-icons' /></Link>
+                <Link href={'/'} onClick={handleClick}><FaTiktok className='social-icons' /></Link>
+                <Link href={'/'} onClick={handleClick}><FaTumblr className='social-icons' /></Link>
 
             </div>
             <div>

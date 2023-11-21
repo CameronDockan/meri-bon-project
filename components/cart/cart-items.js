@@ -76,16 +76,20 @@ const CartItems = () => {
                         <button 
                             className='decrement-quantity-button'
                             onClick={() => subtractQuantityFromCart(cartItem)}
-                            
                         >
-                            -
+                            <svg className="cart-minus-icon" width="45" height="45" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 25H32" stroke="#F0F8FF" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
                         </button>
                         <p>{cartItem.quantity}</p>
                         <button 
                         className="increment-quantity-button"
                         onClick={() => addQuantityToCart(cartItem)}
                         >
-                            +
+                            <svg className="cart-plus-icon" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 25H32" stroke="#F0F8FF" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M25 33V18" stroke="#F0F8FF" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
                         </button>
                     </div>
                 </div>

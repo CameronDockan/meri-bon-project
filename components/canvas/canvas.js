@@ -42,6 +42,9 @@ const Canvas = () => {
         const meriText = new Image()
         meriText.src ='/meribon-text-white-6x5.png'
 
+        const smallMeriText = new Image()
+        smallMeriText.src = '/meribon-text-small.png'
+
         // const ABM = new Image ()
         // ABM.src = '/ABM.png'
 
@@ -217,30 +220,6 @@ const Canvas = () => {
 
             }
             draw(ctx) {
-
-                // //gradient
-                // ctx.save();
-                // const gradient = ctx.createRadialGradient(this.cX, this.cY, this.radialR0, this.cX, this.cY, this.radialR1);
-                // gradient.addColorStop(0, this.yellow);
-                // gradient.addColorStop(1, darkBlue);
-            
-                // ctx.fillStyle = gradient;
-                // // arc
-                // ctx.beginPath();
-                // ctx.moveTo(this.cX, this.cY);
-                // ctx.arc(this.cX, this.cY, this.radialR1, this.startAngle, this.endAngle);
-                // ctx.closePath();
-                // ctx.fill();
-                // ctx.restore();
-
-                // // sunrays
-                // ctx.save();
-                // // ctx.shadowColor = 'rgb(255, 245, 48)';
-                // // ctx.shadowBlur =200;
-                // ctx.drawImage(sunRaysSprite, this.raysX, this.raysY, this.raysW, this.raysH)
-                // ctx.restore();
-
-                // sun
                 ctx.save();
                 // ctx.shadowColor = 'rgb(255, 245, 48)';
                 // ctx.shadowBlur =200;
@@ -251,6 +230,40 @@ const Canvas = () => {
             // update() {}
         }
         const sun = new Sun (cnvs.width - 175); // 175 is sun.w
+
+        class SmallSun {
+            constructor (x) {
+                this.scaleEqualizer = 2;
+                this.w = 175;
+                this.h = 175;
+                this.x = x;
+                this.y = 0
+                this.cX = this.x + this.w * 0.5;
+                this.cY = this.y + this.h * 0.5;
+                this.radialR0 = 0;
+                this.radialR1 = this.w;
+                this.yellow = 'rgba(255, 251, 168, .2)'
+                this.orange = 'rgba(229, 90, 29, .2)'
+                // this.startAngle = Math.PI/2;
+                // this.endAngle = this.startAngle + Math.PI/2;
+                this.startAngle = 0;
+                this.endAngle = Math.PI * 2;
+
+                this.raysW = 275;
+                this.raysH = 276;
+                this.raysX = this.cX - this.raysW * 0.5;
+                this.raysY = this.cY - this.raysH * 0.5;
+            }
+            draw(ctx) {
+                ctx.save();
+                ctx.scale(.5,.5);
+                // ctx.shadowColor = 'rgb(255, 245, 48)';
+                // ctx.shadowBlur =200;
+                ctx.drawImage(sunSprite, this.x, this.y, this.w, this.h)
+                ctx.restore();
+            }
+        }
+        const smallSun = new SmallSun(cnvsWidth*2 - 175)
 
         class Cloud1 {
             constructor(x) {
@@ -1168,14 +1181,28 @@ const Canvas = () => {
 
 
                 if (weatherContext.weather[0].sun) {
-                    sun.draw(ctx);
+                    if (cnvsWidth > 630) {
+                        sun.draw(ctx);
+                    } else {
+                         sun.draw(ctx);
+                        // smallSun.draw(ctx);
+                    }
                 }
 
                 bonsai.draw(ctx);
                 bonsai.update();
 
                 // TEXT
-                ctx.drawImage(meriText, bonsai.x, bonsai.y + 10, 500, 500)
+                if (cnvsWidth > 500) {
+                    ctx.drawImage(meriText, bonsai.x, bonsai.y + 10, 500, 500)
+                } else {
+                    ctx.drawImage(smallMeriText, bonsai.x, bonsai.y + 10, 500, 500)
+                }
+
+
+
+
+
                 // STICKERS
                 // ctx.drawImage(titleStickerImage, 0, 0, 300, 300)
                 // ctx.drawImage(ctaSticker, cnvs.width-300, 0, 300, 300)

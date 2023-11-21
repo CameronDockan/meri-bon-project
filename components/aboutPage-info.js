@@ -85,23 +85,31 @@ const AboutPageInfo = () => {
 
             </div>
             <div className="about-page-bottom-container">
-                <Image
-                    src={cssLogo}
-                    width={size === 100 ? 72 : size - 50}
-                    alt="css logo"
-                 />
-                 <Image
-                    src={reactLogo}
-                    width={size}
-                    height={size}
-                    alt="react logo"
-                 />
-                 <Image
-                    src={nextLogo}
-                    width={size}
-                    height={size}
-                    alt="next jay ess logo"
-                 />
+                <div className='about-page-logo-container'>
+                    <Image
+                        src={cssLogo}
+                        width={size === 100 ? 72 : size - 50}
+                        alt="css logo"
+                    />
+                </div>
+                <div className='about-page-logo-container'>
+                    <Image
+                        src={reactLogo}
+                        width={size}
+                        height={size}
+                        alt="react logo"
+                    />
+                </div>
+                <div className='about-page-logo-container' id='about-page-next-logo-container'>
+                    <div className='next-logo-background-filler'></div>
+                    <Image
+                        src={nextLogo}
+                        width={size}
+                        height={size}
+                        alt="next jay ess logo"
+                        className='next-logo'
+                    />
+                </div>
             </div>
         </div>
     )

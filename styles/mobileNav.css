@@ -197,6 +197,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        /* align-items: flex-start; */
     }
     .mobile-ul-container.active {
         height: calc(100vh + 1px);
@@ -207,6 +208,7 @@
 
     .mobile-ul {
         display: flex;
+        /* margin-top: 40px; */
     }
 }
 
